@@ -6,12 +6,13 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 13:00:53 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 13:44:43 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "client.hpp"
+#include <iostream>
 #include <vector>
 
 class client;
@@ -24,21 +25,36 @@ class channel
 		std::string Password;
 		size_t		Max;
 
-		
-		std::vector<client > Members;
-		std::vector<client > operators;
-		std::vector<client > invited;
-		
+
 		bool InvitaionStatus;
 		bool TopicStatus;
 		bool PassWordStatus;
 		bool AdminStatus;
-	
+
+		std::vector<client > Members;
+		std::vector<client > operators;
+		std::vector<client > invited;
+			
 	public :
-		
-		
+		// Getters / Setters ------------------
+		void setName(std::string Name);
+		void setTopic(std::string Topic);
+		void setPassword(std::string Password);
+		void setMax(size_t Max);
 
+		void setInvitaionStatus(bool Status);
+		void setTopicStatus(bool Status);
+		void setPassWordStatus(bool Status);
+		void setAdminStatus(bool Status);
 
-
+		std::string getName();
+		std::string getTopic();
+		std::string getPassword();
+		size_t		getMax();
 		
+		bool getInvitaionStatus();
+		bool getTopicStatus();
+		bool getPassWordStatus();
+		bool getAdminStatus();
+			
 };
