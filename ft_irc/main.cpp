@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 14:08:38 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:29:10 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,16 @@ int main (int ac, char **av)
 		
 
 		// ft_build_server(); a f unction that will build the server
-		// while(server::ReceivedSignal == false)
-		// {
+		while(server::ReceivedSignal == false)
+		{
+			// the poll function should be heree 
 			
-		// }
+
+			
+			// ft_execute_command(Command, client & Client, 1);
+		}
 		
-		// ft_close_sockets();
+		// ft_close_sockets(); a fuction that closes sochets once a signal is recieved ...
 	}
 	
 	catch(const std::exception & e)

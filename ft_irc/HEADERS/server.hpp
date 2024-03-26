@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 14:09:26 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:27:05 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,27 @@
 class server
 {
 	private :
-		// int Socket;
-		// int Port;
-		// std::string Password;
+		int Socket;
+		int Port;
+		std::string Password;
 
 		
-		// std::vector<client> Clients;
-		// std::vector<channel> Channels;
+		std::vector<client> Clients;
+		std::vector<channel> Channels;
 	public :
+		
+		void ft_execute_command(std::string Command, client & Client, int Socket);
+		
+		// Setters ---------------------
+		void setSocket(int Socket);
+		void setPort(int Port);
+		void setPassword(std::string Password);
+
+		// Getters ---------------------
+		int getSocket();
+		int getPort();
+		std::string getPassword();
+		
 		
 		
 		//Signals : ---------------------

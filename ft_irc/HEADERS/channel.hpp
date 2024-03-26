@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 14:03:10 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:19:07 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ class channel
 		std::vector<client > Invited;
 			
 	public :
+		void ft_channel_init();
+		
 		// Getters / Setters ------------------
 		void setName(std::string Name);
 		void setTopic(std::string Topic);

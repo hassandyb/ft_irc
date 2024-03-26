@@ -6,13 +6,19 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 13:51:07 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:21:57 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/channel.hpp"
 
-
+void channel::ft_channel_init()
+{
+		this->InvitaionStatus = false;
+		this->TopicStatus = false;
+		this->PassWordStatus = false;
+		this->AdminStatus = false;
+}
 // Getters / Setters : -----------------------------
 
 void channel::setName(std::string Name) {this->Name = Name;}
