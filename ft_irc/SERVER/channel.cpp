@@ -6,11 +6,11 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 13:43:00 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 13:51:07 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "HEADERS/channel.hpp"
+#include "../HEADERS/channel.hpp"
 
 
 // Getters / Setters : -----------------------------

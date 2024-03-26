@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 13:44:43 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 14:03:10 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ class channel
 		bool AdminStatus;
 
 		std::vector<client > Members;
-		std::vector<client > operators;
-		std::vector<client > invited;
+		std::vector<client > Admins;
+		std::vector<client > Invited;
 			
 	public :
 		// Getters / Setters ------------------

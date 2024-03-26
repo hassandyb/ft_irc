@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 13:20:12 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 13:58:43 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class client
 		std::vector<channel> Channels;
 		
 	public :
-	
+
 		void setSocket(int Socket);
 		void setNickname(std::string Nickname);
 		void setUsername(std::string Username);

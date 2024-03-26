@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 13:01:24 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 14:08:38 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int main (int ac, char **av)
 	signal(SIGQUIT, server::ft_signal_handler);
 	try
 	{
+		
+
 		// ft_build_server(); a f unction that will build the server
 		// while(server::ReceivedSignal == false)
 		// {

@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 16:07:35 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/03/26 13:02:57 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/03/26 13:50:14 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,11 @@ RM = rm -rf
 
 FLAGS = -Wall -Werror -Wextra -std=c++98 #-fsanitize=address -g3
 
-# CMD1 = $(addprefix parcing/, files ....)
-# CMD2 = $(addprefix initialization/, files ....)
-# SERVER = $(addprefix ray_casting/, files .... )
+# CMD1 = $(addprefix CMD1/, files ....)
+# CMD2 = $(addprefix CMD2/, files ....)
+ SERVER = $(addprefix SERVER/, client.cpp channel.cpp)
 
-SRC = main.cpp #$(SERVER)  $(CMD1) $(CMD2) 
+SRC = main.cpp $(SERVER)  $(CMD1) $(CMD2) 
 
 OBJECTS = ./OBJECT_FILES
 
