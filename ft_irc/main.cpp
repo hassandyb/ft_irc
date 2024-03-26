@@ -6,25 +6,88 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/25 22:38:40 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 02:29:20 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HEADERS/server.hpp"
 
+bool ft_valid_args(int & ac, char **av)
+{
+	
+	if(ac != 3)
+	{
+		std::cout << "Error : This program takes strictly a port and a password!" << std::endl;
+		return false;
+	}
+	std::string port(av[1]);
+	
+	if(port.empty() == true || port.find_first_not_of("0123456789") != std::string::npos)
+	{
+		std::cout << "Error : Invalid port!" << std::endl;
+		return false;
+	}
+	std::istringstream iss_port(av[1]);
+	int port_int;
+	
+	iss_port >> port_int;
+
+	if(port_int < 1024 || port_int > 65535)
+	{
+		std::cout << "Error : the port should be between 1024 and 65535!" << std::endl;
+		return false;
+	}
+	std::string password(av[2]);
+	if(password.length() < 4 || password.length() > 24 || password.find(" ") != std::string::npos)
+	{
+		std::cout << "Error : Invalid password!" << std::endl;
+		return false;
+	}
+	return true;
+	
+}
+
+
+// Signals : ----
+
+bool server::ReceivedSignal = false;
+
+void server::ft_signal_handler(int signum)
+{
+	(void) signum;
+	// desplay a message message of clined deconcted one by one..
+	// close clients sockets and pollfd soket  .. use a function ft_quit();
+	server::ReceivedSignal = true;
+}
+
+
+
+typedef void (func)(int );
 
 int main (int ac, char **av)
 {
-	if(ac != 3)
-		std::cout << "Error : This program takes strictly it port and a password!" << std::endl;
+	if(ft_valid_args(ac, av) == false)
+		return 0;
+
+	
+	signal(SIGINT, server::ft_signal_handler);
+	signal(SIGQUIT, server::ft_signal_handler);
 	try
 	{
-		ft_build_server();
-	}
-	catch(const std::exception & e)
-	{
+		// ft_build_server(); a f unction that will build the server
+		while(server::ReceivedSignal == false)
+		{
+			
+		}
+		
+		// ft_close_sockets();
 	}
 	
+	catch(const std::exception & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	return 0;
 }
 
 
