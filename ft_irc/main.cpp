@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 02:29:20 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/26 13:01:24 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ int main (int ac, char **av)
 	try
 	{
 		// ft_build_server(); a f unction that will build the server
-		while(server::ReceivedSignal == false)
-		{
+		// while(server::ReceivedSignal == false)
+		// {
 			
-		}
+		// }
 		
 		// ft_close_sockets();
 	}

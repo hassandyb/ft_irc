@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 16:07:35 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/03/26 00:24:26 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/03/26 13:02:57 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ HEADER = HEADERS/server.hpp HEADERS/client.hpp HEADERS/channel.hpp
 
 CC = c++
 
-RM = rm -f 
+RM = rm -rf 
 
 FLAGS = -Wall -Werror -Wextra -std=c++98 #-fsanitize=address -g3
 
@@ -40,7 +40,7 @@ $(OBJECTS)/%.o : %.cpp
 	$(CC) $(FLAGS)  -c $< -o $@
 
 clean :
-	$(RM) $(OBJ)
+	$(RM) $(OBJECTS)
 
 fclean : clean
 	$(RM) $(NAME)
