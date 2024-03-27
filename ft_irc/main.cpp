@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/26 15:29:10 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:09:57 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool ft_valid_args(int & ac, char **av)
 	
 	if(ac != 3)
 	{
-		std::cout << "Error : This program takes strictly a port and a password!" << std::endl;
+		std::cout << "Usage :./ircserv <port> <password>" << std::endl;
 		return false;
 	}
 	std::string port(av[1]);
@@ -62,7 +62,6 @@ void server::ft_signal_handler(int signum)
 
 
 
-typedef void (func)(int );
 
 int main (int ac, char **av)
 {
@@ -80,10 +79,13 @@ int main (int ac, char **av)
 		while(server::ReceivedSignal == false)
 		{
 			// the poll function should be heree 
+			std::string command;
+			std::cout << "Command : ";
+			getline(std::cin, command);
+			server s;
+			client c;
+			s.ft_execute_command(command, c, 1);
 			
-
-			
-			// ft_execute_command(Command, client & Client, 1);
 		}
 		
 		// ft_close_sockets(); a fuction that closes sochets once a signal is recieved ...
