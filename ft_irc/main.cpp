@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 14:09:57 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/27 18:20:17 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,14 @@ bool ft_valid_args(int & ac, char **av)
 		return false;
 	}
 	std::string password(av[2]);
-	if(password.length() < 4 || password.length() > 24 || password.find(" ") != std::string::npos)
+	if(password.length() < 4 || password.length() > 24)
 	{
 		std::cout << "Error : Invalid password!" << std::endl;
+		return false;
+	}
+	if(password.find_first_not_of(" \t\n\v\f\r") == std::string::npos)
+	{
+		std::cout << "Error : Avoid white spaces in your password!" << std::endl;
 		return false;
 	}
 	return true;
@@ -73,16 +78,20 @@ int main (int ac, char **av)
 	signal(SIGQUIT, server::ft_signal_handler);
 	try
 	{
-		
-
-		// ft_build_server(); a f unction that will build the server
+		server s(av[1], av[2]);
+		// a function that buildes a server ...
 		while(server::ReceivedSignal == false)
 		{
 			// the poll function should be heree 
 			std::string command;
 			std::cout << "Command : ";
 			getline(std::cin, command);
-			server s;
+
+
+
+			
+
+
 			client c;
 			s.ft_execute_command(command, c, 1);
 			

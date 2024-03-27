@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 16:07:35 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/03/27 14:10:00 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/03/27 18:00:20 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ RM = rm -rf
 
 FLAGS = -Wall -Werror -Wextra -std=c++98 #-fsanitize=address -g3
 
-CMD1 = $(addprefix CMD1/, cmd.cpp)
+CMD1 = $(addprefix CMD1/, cmd.cpp pass.cpp)
 # CMD2 = $(addprefix CMD2/, files ....)
- SERVER = $(addprefix SERVER/, client.cpp channel.cpp)
+ SERVER = $(addprefix SERVER/, server.cpp client.cpp channel.cpp)
 
 SRC = main.cpp $(SERVER)  $(CMD1) #$(CMD2) 
 

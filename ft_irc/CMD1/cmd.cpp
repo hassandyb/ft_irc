@@ -6,11 +6,35 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 14:45:53 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/27 15:53:09 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
+
+bool server::ft_send(int socket, const void * buff, size_t len, int flags)
+{
+
+    // for testing ...only
+    (void)socket;
+    (void)len;
+    (void)flags;
+    char *msg = (char *)buff;
+    std::cout << msg << std::endl;
+    
+
+
+
+
+    
+    // ssize_t r =  send(socket, buff, len, flags);
+    // if(r == -1)// send faliere
+    // {
+    //     std::cerr << "Send() failed to send respond!" << std::endl;
+    //     return false;
+    // }
+    return true;
+}
 
 void server::ft_execute_command(std::string Command, client & Client, int Socket)
 {
@@ -18,7 +42,7 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     (void)Client;
     (void)Socket;
 
-        
+    std::vector<std::string>::iterator it;
     std::istringstream iss(Command);
     std::string split;
     std::vector<std::string> Cmds;
@@ -29,8 +53,8 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     if(Cmds.size() == 0)
         return;
 
-    // if(Cmds[0] == "PASS" || Cmds[0] == "pass")
-    //     ft_pass(Cmds, Client, Socket);
+    if(Cmds[0] == "PASS" || Cmds[0] == "pass")
+        ft_pass(Cmds, Client, Socket);
     // else if(Cmds[0] == "USER" || Cmds[0] == "user")
     //     ft_user(Cmds, Client, Socket);
     // else if(Cmds[0] == "NICK" || Cmds[0] == "nick")
@@ -53,8 +77,8 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     //     ft_kick(Cmds, Client, Socket);
     // else if(Cmds[0] == "QUIT" || Cmds[0] == "quit")
     //     ft_quit(Cmds, Client, Socket);
-    // else
-    //     // ...
+    else
+        std::cout << "else condiction ..." << std::endl;
 
 
 
