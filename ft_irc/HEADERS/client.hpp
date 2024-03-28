@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 18:14:43 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/27 22:18:03 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ class client
 		std::string Username;
 		std::vector<channel> Channels;
 
-		bool registred;
+		bool passStage;
+		bool regestred;
 		
 	public :
 		client();

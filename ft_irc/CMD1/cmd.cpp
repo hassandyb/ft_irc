@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 15:53:09 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/28 00:01:50 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,17 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     }
     if(Cmds.size() == 0)
         return;
+    // if(this->Client.getPassword)
+    // create password stage and autotication satge 
+
+
+
+
 
     if(Cmds[0] == "PASS" || Cmds[0] == "pass")
         ft_pass(Cmds, Client, Socket);
     // else if(Cmds[0] == "USER" || Cmds[0] == "user")
-    //     ft_user(Cmds, Client, Socket);
+    //     ft_user(Cmds, Client, Socket);// 
     // else if(Cmds[0] == "NICK" || Cmds[0] == "nick")
     //     ft_nick(Cmds, Client, Socket);
     // else if(Cmds[0] == "JOIN" || Cmds[0] == "join")
@@ -68,7 +74,7 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
 
     
     // else if(Cmds[0] == "TOPIC" || Cmds[0] == "topic")
-    //     ft_topic(Cmds, Client, Socket);
+    //     ft_topic(Cmds, Client, Socket);// enter clinet as reference so you can change it if you want same for all functions ..
     // else if(Cmds[0] == "PART" || Cmds[0] == "part")
     //     ft_part(Cmds, Client, Socket);
     // else if(Cmds[0] == "PRIVMSG" || Cmds[0] == "privmsg")
@@ -78,7 +84,7 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     // else if(Cmds[0] == "QUIT" || Cmds[0] == "quit")
     //     ft_quit(Cmds, Client, Socket);
     else
-        std::cout << "else condiction ..." << std::endl;
+        std::cout << "else condition ..." << std::endl;
 
 
 

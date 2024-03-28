@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:05:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 18:14:33 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/27 22:19:29 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 client::client()
 {
-    this->registred = false;
+    this->passStage = false;
+	this->regestred = false;
 }
 
 
