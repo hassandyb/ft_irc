@@ -6,11 +6,12 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 13:40:19 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/28 16:01:57 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HEADERS/server.hpp"
+
 
 bool ft_valid_args(int & ac, char **av)
 {
@@ -22,7 +23,7 @@ bool ft_valid_args(int & ac, char **av)
 	}
 	std::string port(av[1]);
 	
-	if(port.empty() == true || port.find_first_not_of("0123456789") != std::string::npos)
+	if(port.empty() == true || port.find_first_not_of("0123456789") != std::string::npos)//find_first_not_o return the index of the element thta does no exit in the sting passed as paramter..
 	{
 		std::cout << "Error : Invalid port!" << std::endl;
 		return false;
@@ -43,11 +44,7 @@ bool ft_valid_args(int & ac, char **av)
 		std::cout << "Error : Invalid password!" << std::endl;
 		return false;
 	}
-	if(password.find_first_not_of(" \t\n\v\f\r") == std::string::npos)
-	{
-		std::cout << "Error : Avoid white spaces in your password!" << std::endl;
-		return false;
-	}
+
 	return true;
 	
 }
