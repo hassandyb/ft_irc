@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 14:56:55 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/28 16:39:56 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <signal.h>
 #include <sys/socket.h>
 #include <string>
+#include <cctype>
 
 
 
@@ -65,6 +66,9 @@ class server
 		void ft_pass(std::vector<std::string> & Cmds, client & Client, int Socket);
 		void ft_user(std::vector<std::string> & Cmds, client & Client, int Socket);
 		void ft_nick(std::vector<std::string> & Cmds, client & Client, int Socket);
+		bool ft_nick_already_used(std::string nick);
+
+		
 		bool ft_send(int socket, const void * buff, size_t len, int flags);
 };
 
