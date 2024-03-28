@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:08:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 18:14:02 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/28 12:47:28 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 
 server::server(char * port, char * Password)
 {
-
     this->Port = atoi((const char *)port);
     std::string pass(Password);
     this->Password = pass;
-
 }
 
 

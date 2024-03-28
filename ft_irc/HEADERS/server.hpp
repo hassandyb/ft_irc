@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 18:02:19 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:29:49 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ class server
 
 
 		// Commands : ---------------------
-		
+		bool ft_is_registred(client & Client, int Socket);
 		void ft_pass(std::vector<std::string> & Cmds, client & Client, int Socket);
 
 		bool ft_send(int socket, const void * buff, size_t len, int flags);

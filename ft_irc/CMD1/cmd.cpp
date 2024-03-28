@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 00:01:50 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:36:55 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,23 @@ bool server::ft_send(int socket, const void * buff, size_t len, int flags)
     return true;
 }
 
+
+bool server::ft_is_registred(client & Client, int Socket)
+{
+    if(Client.getRegestred() == false)
+    {
+        std::string msg = Client.getNickname() + " :You have not registered!";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return false;
+    }
+    return true;
+}
+
+
 void server::ft_execute_command(std::string Command, client & Client, int Socket)
 {
 
-    (void)Client;
-    (void)Socket;
+
 
     std::vector<std::string>::iterator it;
     std::istringstream iss(Command);
@@ -52,25 +64,42 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     }
     if(Cmds.size() == 0)
         return;
-    // if(this->Client.getPassword)
-    // create password stage and autotication satge 
 
+    // Password stage and autotication satge 
+    
+    
 
 
 
 
     if(Cmds[0] == "PASS" || Cmds[0] == "pass")
         ft_pass(Cmds, Client, Socket);
-    // else if(Cmds[0] == "USER" || Cmds[0] == "user")
-    //     ft_user(Cmds, Client, Socket);// 
-    // else if(Cmds[0] == "NICK" || Cmds[0] == "nick")
+        
+    // if(Cmds[0] == "USER" || Cmds[0] == "user")
+    //     ft_user(Cmds, Client, Socket);
+        
+    // if(Cmds[0] == "NICK" || Cmds[0] == "nick")
     //     ft_nick(Cmds, Client, Socket);
+
+
+    
+    if(ft_is_registred(Client, Socket) == false)
+        return;
+
+
+
+   
+        
+
     // else if(Cmds[0] == "JOIN" || Cmds[0] == "join")
     //     ft_join(Cmds, Client, Socket);
     // else if(Cmds[0] == "INVITE" || Cmds[0] == "invite")
     //     ft_invite(Cmds, Client, Socket);
     // else if(Cmds[0] == "MODE" || Cmds[0] == "mode")
     //     ft_mode(Cmds, Client, Socket);
+
+
+
 
     
     // else if(Cmds[0] == "TOPIC" || Cmds[0] == "topic")

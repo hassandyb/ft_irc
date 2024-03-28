@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/27 18:20:17 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/28 13:40:19 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int main (int ac, char **av)
 			
 
 
-			client c;
+			client c;// start modifing /...
 			s.ft_execute_command(command, c, 1);
 			
 		}
