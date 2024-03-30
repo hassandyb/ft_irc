@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 16:01:57 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 10:09:46 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ bool ft_valid_args(int & ac, char **av)
 
 	if(port_int < 1024 || port_int > 65535)
 	{
-		std::cout << "Error : the port should be between 1024 and 65535!" << std::endl;
+		std::cout << "Error : The port should be between 1024 and 65535!" << std::endl;
 		return false;
 	}
 	std::string password(av[2]);
 	if(password.length() < 4 || password.length() > 24)
 	{
-		std::cout << "Error : Invalid password!" << std::endl;
+		std::cout << "Error : Invalid password, we recommend a password between 4 and 24 characters." << std::endl;
 		return false;
 	}
 
@@ -77,6 +77,8 @@ int main (int ac, char **av)
 	{
 		server s(av[1], av[2]);
 		// a function that buildes a server ...
+
+		client c;// start modifing , just for testing ...
 		while(server::ReceivedSignal == false)
 		{
 			// the poll function should be heree 
@@ -89,7 +91,7 @@ int main (int ac, char **av)
 			
 
 
-			client c;// start modifing /...
+			
 			s.ft_execute_command(command, c, 1);
 			
 		}

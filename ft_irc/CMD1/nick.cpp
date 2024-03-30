@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:39:12 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 09:07:34 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 10:21:13 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@
 
 bool server::ft_nick_already_used(std::string nick)
 {
-    for(int i = 0; i < this->Clients.size(); i++)
+    for(size_t i = 0; i < this->Clients.size(); i++)
     {
+         std::cout << Clients[i].getNickname() <<  "  " << nick << std::endl;
         if(Clients[i].getNickname() == nick)
+        {
+           
             return true;
+        }
+            
     }
     return false;
 }
@@ -30,6 +35,7 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
     // did not enter the correct password yet ..
     if(Client.getPassStage() == false)
     {
+
         std::string msg =  Client.getNickname() + " (451) :You have not registered";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
@@ -50,7 +56,7 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;       
     }
-    if(ft_nick_already_used(Client.getNickname()) == true)
+    if(ft_nick_already_used(Cmds[1]) == true)
     {
         std::string msg = Client.getNickname() + " (433) :Nickname is already in use";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
@@ -69,12 +75,13 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
     {
         std::string msg = Client.getNickname() + " changed his nickname to " + Cmds[1] + ".";
         std::cout << msg << std::endl;
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
         Client.setNickname(Cmds[1]);
         return ;
     }
     
     Client.setNickname(Cmds[1]);
-    // now if the username exist  == we regestred this clinet by changing Regestred to true, and add him to clients
+    // now if the username exist  == we regestred this clinet 
     if((Client.getUsername()).empty() != true)
     {
         Client.setRegestred(true);

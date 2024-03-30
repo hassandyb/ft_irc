@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/29 19:56:33 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 10:22:16 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool server::ft_is_registred(client & Client, int Socket)
 {
     if(Client.getRegestred() == false)
     {
-        std::string msg = Client.getNickname() + " :You have not registered!";
+        std::string msg = Client.getNickname() + " (451) :You have not registered";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return false;
     }
@@ -66,11 +66,6 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
         return;
 
     // Password stage and autotication satge 
-    
-    
-
-
-
 
     if(Cmds[0] == "PASS" || Cmds[0] == "pass")
     {
@@ -79,11 +74,19 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     }
        
         
-    // if(Cmds[0] == "USER" || Cmds[0] == "user")
-        // ft_user(Cmds, Client, Socket);
+    if(Cmds[0] == "USER" || Cmds[0] == "user")
+    {
+        ft_user(Cmds, Client, Socket);
+        return;
+    }
         
-    // if(Cmds[0] == "NICK" || Cmds[0] == "nick")
-    //     ft_nick(Cmds, Client, Socket);
+        
+    if(Cmds[0] == "NICK" || Cmds[0] == "nick")
+    {
+        ft_nick(Cmds, Client, Socket);
+        return;
+    }
+        
 
 
     if(ft_is_registred(Client, Socket) == false)

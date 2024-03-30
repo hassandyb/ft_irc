@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:38:48 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 09:27:10 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 10:33:24 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,32 @@ void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socke
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
     }
-    // empty username or on contains only one char
+    // Contains only one char
     if(Cmds[1].size() <= 1)
     {
+        
         std::string msg = Client.getNickname() + "(462) :Invalid username";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;     
     }
+    
     Client.setUsername(Cmds[1]);
     
+    //saving realname ...
     std::string name;
-    for(int i = 4 < i < Cmds.size(); i++)
+    for(size_t i = 4 ; i < Cmds.size(); i++)
+        name = name + Cmds[i] + " ";
+    Client.setRealname(name);
+
+    // if the nick exist we regester this clinet ...
+    if((Client.getNickname()).empty() != true)
     {
-        name = name + Cmds[i];
+        Client.setRegestred(true);
+        this->Clients.push_back(Client);
+        std::string msg = Client.getNickname() + " (001) :Welcome to the ft_irc Network";
+        std::cout << msg << std::endl;
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
     }
-    Client.setRealname()
-    
 }
 
 
