@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:38:48 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 15:20:06 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 09:27:10 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,42 @@ void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socke
     // did not enter the correct password yet ..
     if(Client.getPassStage() == false)
     {
-        std::string msg =  " :You have not registered!";
+        std::string msg =  " (451) :You have not registered";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
+
+    // check 4 paramters ..
+    if(Cmds.size() < 5)
+    {
+        std::string msg = Client.getNickname() + " (461) :Not enough parameters";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return;
+    }
+
+    // changing username after regestration..
+    if(Client.getRegestred() == true)
+    {
+        std::string msg = Client.getNickname() + "(462) :You may not reregister";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return;
+    }
+    // empty username or on contains only one char
+    if(Cmds[1].size() <= 1)
+    {
+        std::string msg = Client.getNickname() + "(462) :Invalid username";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return;     
+    }
+    Client.setUsername(Cmds[1]);
+    
+    std::string name;
+    for(int i = 4 < i < Cmds.size(); i++)
+    {
+        name = name + Cmds[i];
+    }
+    Client.setRealname()
+    
 }
 
 

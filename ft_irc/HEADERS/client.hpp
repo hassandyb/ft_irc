@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 12:59:58 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 09:17:08 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ class client
 		int Socket;
 		std::string Nickname;
 		std::string Username;
+		
 		std::vector<channel> Channels;
 
 		bool PassStage;// we make it true when the clinet enterd the correct password
 		bool Regestred;//after the pass word is correct clinet must enter nick and user to pass this satge 
 		
+		std::string Realname;
 	public :
 		client();
 		
@@ -37,13 +39,14 @@ class client
 		void setUsername(std::string Username);
 		void setPassStage(bool status);
 		void setRegestred(bool status);
-		
+		void setRealname(std::string Realname);
 		//Getters : ----------------
 		int getSocket();
 		std::string getNickname();
 		std::string getUsername();
 		bool getPassStage();
 		bool getRegestred();
-		
+		std::string getRealname();
+
 
 };

@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:39:12 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 08:38:21 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 09:07:34 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
 
     //  Erroneus nickname cases
     char first_char = Cmds[1].at(0);
-    if(Cmds.size() > 2 || std::isdigit(first_char) == true)// we need a args and the nickname must start witha char , or thet ....
+    // too many args, first paramter is gigit , emty nickname
+    if(Cmds.size() > 2 || std::isdigit(first_char) == true || Cmds[1].empty() == true)// we need a args and the nickname must start witha char , or thet ....
     {
         std::string msg = Client.getNickname() + " (432) :Erroneus nickname";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
@@ -63,8 +64,8 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
     }
 
     
-    // changing the nick name ..
-    if((Client.getNickname()).empty() == false)
+    // changing the nick name after regestration..
+    if(Client.getRegestred() == true)
     {
         std::string msg = Client.getNickname() + " changed his nickname to " + Cmds[1] + ".";
         std::cout << msg << std::endl;
