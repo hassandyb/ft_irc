@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 14:36:55 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/29 19:56:33 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,19 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
 
 
     if(Cmds[0] == "PASS" || Cmds[0] == "pass")
+    {
         ft_pass(Cmds, Client, Socket);
+        return ;
+    }
+       
         
     // if(Cmds[0] == "USER" || Cmds[0] == "user")
-    //     ft_user(Cmds, Client, Socket);
+        // ft_user(Cmds, Client, Socket);
         
     // if(Cmds[0] == "NICK" || Cmds[0] == "nick")
     //     ft_nick(Cmds, Client, Socket);
 
 
-    
     if(ft_is_registred(Client, Socket) == false)
         return;
 
@@ -95,6 +98,8 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     //     ft_join(Cmds, Client, Socket);
     // else if(Cmds[0] == "INVITE" || Cmds[0] == "invite")
     //     ft_invite(Cmds, Client, Socket);
+    // else if(Cmds[0] == "PRIVMSG" || Cmds[0] == "privmsg")
+    //     ft_privmsg(Cmds, Client, Socket);
     // else if(Cmds[0] == "MODE" || Cmds[0] == "mode")
     //     ft_mode(Cmds, Client, Socket);
 
@@ -106,8 +111,7 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     //     ft_topic(Cmds, Client, Socket);// enter clinet as reference so you can change it if you want same for all functions ..
     // else if(Cmds[0] == "PART" || Cmds[0] == "part")
     //     ft_part(Cmds, Client, Socket);
-    // else if(Cmds[0] == "PRIVMSG" || Cmds[0] == "privmsg")
-    //     ft_privmsg(Cmds, Client, Socket);
+
     // else if(Cmds[0] == "KICK" || Cmds[0] == "kick")
     //     ft_kick(Cmds, Client, Socket);
     // else if(Cmds[0] == "QUIT" || Cmds[0] == "quit")
