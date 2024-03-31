@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/31 17:15:22 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/31 18:06:45 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void server::ft_join_channel(std::vector<std::string> & Cmds, size_t i, client &
     }
     
     // case 2 : channel does exist ....
+    (void)password;
     channel Channel = ft_find_channel(Cmds[i]);
 }
 
