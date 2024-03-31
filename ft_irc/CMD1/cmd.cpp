@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 10:22:16 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/31 16:40:28 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,11 @@ bool server::ft_is_registred(client & Client, int Socket)
 
 void server::ft_execute_command(std::string Command, client & Client, int Socket)
 {
-
-
-
     std::vector<std::string>::iterator it;
     std::istringstream iss(Command);
     std::string split;
     std::vector<std::string> Cmds;
+    
     while(iss >> split)
     {
         Cmds.push_back(split);
@@ -72,23 +70,16 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
         ft_pass(Cmds, Client, Socket);
         return ;
     }
-       
-        
     if(Cmds[0] == "USER" || Cmds[0] == "user")
     {
         ft_user(Cmds, Client, Socket);
         return;
     }
-        
-        
     if(Cmds[0] == "NICK" || Cmds[0] == "nick")
     {
         ft_nick(Cmds, Client, Socket);
         return;
     }
-        
-
-
     if(ft_is_registred(Client, Socket) == false)
         return;
 
@@ -97,8 +88,9 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
    
         
 
-    // else if(Cmds[0] == "JOIN" || Cmds[0] == "join")
-    //     ft_join(Cmds, Client, Socket);
+    if(Cmds[0] == "JOIN" || Cmds[0] == "join")
+        ft_join(Cmds, Client, Socket);
+        
     // else if(Cmds[0] == "INVITE" || Cmds[0] == "invite")
     //     ft_invite(Cmds, Client, Socket);
     // else if(Cmds[0] == "PRIVMSG" || Cmds[0] == "privmsg")

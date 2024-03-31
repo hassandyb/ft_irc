@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 16:39:56 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/31 17:06:39 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,16 @@ class server
 		void ft_user(std::vector<std::string> & Cmds, client & Client, int Socket);
 		void ft_nick(std::vector<std::string> & Cmds, client & Client, int Socket);
 		bool ft_nick_already_used(std::string nick);
+		void ft_inform_clients(std::string msg);
+		void ft_join_channel(std::vector<std::string> & Cmds, size_t i,  client & Client, bool password);
+		void ft_join(std::vector<std::string> Cmds, client & Client, int Socket);
+		bool ft_channel_exist(std::string channel_name);
+		bool ft_send(int socket, const void * buff, size_t len, int flags);
+		channel & ft_find_channel(std::string channel_name);
+
 
 		
-		bool ft_send(int socket, const void * buff, size_t len, int flags);
-};
+};	
 
 
 

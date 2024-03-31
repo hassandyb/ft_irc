@@ -6,14 +6,11 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:38:48 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 10:33:24 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/30 10:36:04 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
-
-// bool server::ft_send(int socket, const void * buff, size_t len, int flags);
-
 
 void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socket)
 {

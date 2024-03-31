@@ -6,13 +6,19 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:39:12 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 10:21:13 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/03/31 14:17:56 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-// bool server::ft_send(int socket, const void * buff, size_t len, int flags);
+void server::ft_inform_clients(std::string msg)
+{
+    for(size_t i = 0; i < Clients.size(); i++)
+    {
+        ft_send(Clients[i].getSocket(), msg.c_str(), msg.size(), 0);
+    }
+}
 
 bool server::ft_nick_already_used(std::string nick)
 {
@@ -77,6 +83,7 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
         std::cout << msg << std::endl;
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         Client.setNickname(Cmds[1]);
+        ft_inform_clients(msg);
         return ;
     }
     
