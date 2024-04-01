@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 17:09:37 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 22:21:37 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ class server
 		void ft_join_message(std::vector<std::string> & Cmds, size_t i, client & Client, channel & Channel);
 		void ft_invite(std::vector<std::string> Cmds, client & Client, int Socket);
 		
+		// utilts -----------------
+
+		bool ft_find_a_client(std::string Nick);
+		bool ft_find_a_channel(std::string Channel_name);
+		channel & ft_get_a_channel(std::string Channel_name);
 };	
 
 

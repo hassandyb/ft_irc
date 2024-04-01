@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:08:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/28 12:47:28 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 22:51:26 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,37 @@ std::string server::getPassword() {return this->Password;}
 
 
 
+// Utils -----------------------------------
 
+bool server::ft_find_a_client(std::string Nick)
+{
+    for(size_t i = 0; i < Clients.size(); i++)
+    {
+        if(Clients[i].getNickname() == Nick)
+            return true;
+    }
+    return false;
+}
 
+bool server::ft_find_a_channel(std::string Channel_name)
+{
+    for(size_t i = 0; i < Channels.size(); i++)
+    {
+        if(Channels[i].getName() == Channel_name)
+            return true;
+    }
+    return false;
+}
+
+channel & server::ft_get_a_channel(std::string Channel_name)
+{
+    size_t i = 0;
+    for(i = 0 ; i < Channels.size(); i++)
+    {
+        if(Channels[i].getName() == Channel_name)
+            return Channels[i];
+    }
+    return Channels[i]; 
+}
 
 
