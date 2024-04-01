@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 13:44:22 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 16:06:30 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,37 @@ void channel::ft_add_invited(client & Client) {this->Invited.push_back(Client);}
 
 bool channel::ft_find_client(std::string list, std::string Nickname)
 {
-	// for(size_t)....
+	std::vector<client >  Container;
+	if(list == "Members")
+		Container = this->Members;
+	if(list == "Admins")
+		Container = this->Admins;
+	if(list == "Invited")
+		Container = this->Invited;
+		
+	for(size_t i = 0; i < Container.size(); i++)
+	{
+		if(Container[i].getNickname() == Nickname)
+			return true;
+	}
+	return false;
 }
+
+std::string channel::ft_list_admins_and_members()
+{
+	std::string result;
+
+	for(size_t i = 0; i < Admins.size(); i++)
+	{
+		result = result + "@" + Admins[i].getNickname() + " ";
+	}
+	
+	for(size_t i = 0; i < Members.size(); i++)
+	{
+		result = result + Members[i].getNickname() + " ";
+	}
+
+	return result;
+}
+
+

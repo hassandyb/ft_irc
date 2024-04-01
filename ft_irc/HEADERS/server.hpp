@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/31 17:06:39 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 15:46:19 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ class server
 		bool ft_channel_exist(std::string channel_name);
 		bool ft_send(int socket, const void * buff, size_t len, int flags);
 		channel & ft_find_channel(std::string channel_name);
-
+		void ft_join_message(std::vector<std::string> & Cmds, size_t i, client & Client, channel & Channel);
 
 		
 };	
