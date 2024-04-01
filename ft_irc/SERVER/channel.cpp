@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/31 16:55:05 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:44:22 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,7 @@ void channel::ft_add_member(client & Client) {this->Members.push_back(Client);}
 void channel::ft_add_admin(client & Client) {this->Admins.push_back(Client);}
 void channel::ft_add_invited(client & Client) {this->Invited.push_back(Client);}
 
-
+bool channel::ft_find_client(std::string list, std::string Nickname)
+{
+	// for(size_t)....
+}

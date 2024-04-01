@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/31 16:52:13 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:43:44 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ class channel
 		std::string Password;
 		size_t		Max;
 
-
+		bool PassWordStatus;
 		bool InvitaionStatus;
 		bool TopicStatus;
-		bool PassWordStatus;
 		bool AdminStatus;
 
 		std::vector<client > Members;
-		std::vector<client > Admins;// we add to thrie names @
+		std::vector<client > Admins;
 		std::vector<client > Invited;
 			
 	public :
@@ -65,5 +64,6 @@ class channel
 		void ft_add_admin(client & Client);
 		void ft_add_invited(client & Client);
 
+		bool ft_find_client(std::string list, std::string Nickname);// list == Members, admins, ...ext  return -1 if do no exist , return indice of it if it exist 
 		
 };
