@@ -6,13 +6,12 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 17:04:59 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 17:29:34 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-// bool ft_send(int socket, const void * buff, size_t len, int flags);
 
 bool server::ft_channel_exist(std::string channel_name)
 {
@@ -54,9 +53,15 @@ void server::ft_join_message(std::vector<std::string> & Cmds, size_t i, client &
         std::cout << msg3 << std::endl;    
 }
 
-
 void server::ft_join_channel(std::vector<std::string> & Cmds, size_t i, client & Client, bool password)
 {
+    // case zero : entered only #
+    if(Cmds.size() == 1)
+    {
+        std::string msg = Client.getNickname() + " " + Cmds[i] + " 475 :Cannot join channel (+k)";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        return ;        
+    }
     // case 1 : channel does no exist in channels #########################################
     if(ft_channel_exist(Cmds[i]) == false)
     {
