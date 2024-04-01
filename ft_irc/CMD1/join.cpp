@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 16:07:07 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/01 17:04:59 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void server::ft_join_channel(std::vector<std::string> & Cmds, size_t i, client &
     (void)password;
     channel Channel = ft_find_channel(Cmds[i]);
     
-    // invite only channel - private channel
+    // invite only channel 
     if(Channel.ft_find_client("Invited", Client.getNickname()) == false)
     {
         std::string msg = Client.getNickname() + " " + Cmds[i] + " :Cannot join channel (+i)";
@@ -87,7 +87,32 @@ void server::ft_join_channel(std::vector<std::string> & Cmds, size_t i, client &
         return ;
     }
     
-    // Channel.getPassWordStatus() == true &&   "<client> <channel> :Cannot join channel (+k)"   - ERR_BADCHANNELKEY (475) 
+    // channel require a password
+    if(Channel.getPassWordStatus() == true)
+    {
+        bool err = false;
+        
+        // cases 
+        if(password == false)// No password entered after args 
+            err = true;
+        if(password == true)// there is a password after the channel name
+        {
+            if(Cmds[i + 1] == Channel.getPassword())
+                err = true;
+        }
+        
+        if(err == true)
+        {
+            std::string msg = Client.getNickname() + " " + Cmds[i] + " (475) :Cannot join channel (+k)";
+            ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        }
+        else
+        {
+            Channel.ft_add_member(Client);
+            ft_join_message(Cmds, i, Client, Channel);
+        }
+        return ;
+    }
  
 }
 
