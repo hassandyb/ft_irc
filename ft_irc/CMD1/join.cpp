@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 15:30:12 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/02 16:47:14 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,17 @@ void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
    
 }
 
+
+void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
+{
+    if(Cmds.size() == 1)
+    {
+        std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return;
+    }
+}
+
 // remember if the pass word start with : takes all args and add space ...
 
 
@@ -168,13 +179,13 @@ void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
 
 // spli all and take each chanell with its pass word
 
-// now we have tow caese 
+// now we have tow cases
 
-	// case 1 created first time 
-		// egnore the password (casue in its creation the chnnale pass word status set to false)
-	// caes 2 it s alread exist 
-		// ==> passwordstatus == false ==>join him directly
-		// ==> passwordstatus == true =>the password should max the one entred by the client... 
+// case 1 created first time 
+    // egnore the password (casue in its creation the chnnale pass word status set to false)
+// caes 2 it s alread exist 
+    // ==> passwordstatus == false ==>join him directly
+    // ==> passwordstatus == true =>the password should max the one entred by the client... 
 
 
 
