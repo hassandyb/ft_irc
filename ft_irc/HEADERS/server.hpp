@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 22:21:37 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/02 12:17:13 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ class server
 		bool ft_find_a_client(std::string Nick);
 		bool ft_find_a_channel(std::string Channel_name);
 		channel & ft_get_a_channel(std::string Channel_name);
+		client & ft_get_client(std::string nick);
 };	
 
 

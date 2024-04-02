@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:08:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 22:51:26 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/02 12:44:53 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,13 @@ channel & server::ft_get_a_channel(std::string Channel_name)
 }
 
 
+client & server::ft_get_client(std::string nick)
+{
+    size_t i ;
+    for( i = 0; i < Clients.size(); i++)
+    {
+        if(Clients[i].getNickname() == nick)
+            return Clients[i];
+    }
+    return Clients[i];
+}
