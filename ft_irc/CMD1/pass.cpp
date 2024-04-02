@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:17:15 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 10:36:00 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/02 14:15:37 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void server::ft_pass(std::vector<std::string> & Cmds, client & Client, int Socke
 
     if(Cmds.size() == 1)
     {
-        std::string msg = Client.getNickname() + " (461) :Not enough parameters";
+        std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) :Not enough parameters";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
