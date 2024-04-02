@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 16:47:14 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/02 23:39:16 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,44 +121,68 @@ void server::ft_join_channel(std::vector<std::string> & Cmds, size_t i, client &
  
 }
 
-void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
-{
-    if(Cmds.size() == 1)
-    {
-        std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
-        ft_send(Socket, msg.c_str(), msg.size(), 0);
-        return;
-    }
-    if(Cmds[1].at(0) != '#')
-    {
-        std::string msg = Client.getNickname() + " localhost (403) :No such channel";
-        ft_send(Socket, msg.c_str(), msg.size(), 0);
-        return ;
-    }
-    size_t i = 1;
-   while(i < Cmds.size())
-   {
-        bool password;
-        if(Cmds[i].at(0) == '#')
-        {
+// void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
+// {
+//     if(Cmds.size() == 1)
+//     {
+//         std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
+//         ft_send(Socket, msg.c_str(), msg.size(), 0);
+//         return;
+//     }
+//     if(Cmds[1].at(0) != '#')
+//     {
+//         std::string msg = Client.getNickname() + " localhost (403) :No such channel";
+//         ft_send(Socket, msg.c_str(), msg.size(), 0);
+//         return ;
+//     }
+//     size_t i = 1;
+//    while(i < Cmds.size())
+//    {
+//         bool password;
+//         if(Cmds[i].at(0) == '#')
+//         {
             
-            if(i + 1 >= Cmds.size())
-                password = false;
-            if(i + 1 < Cmds.size())
-            {
-                if(Cmds[i + 1].at(0) == '#')
-                password = false;
-            }
-            password = true;
-            ft_join_channel(Cmds, i, Client, password);
+//             if(i + 1 >= Cmds.size())
+//                 password = false;
+//             if(i + 1 < Cmds.size())
+//             {
+//                 if(Cmds[i + 1].at(0) == '#')
+//                 password = false;
+//             }
+//             password = true;
+//             ft_join_channel(Cmds, i, Client, password);
             
-        }
-        i++;
-   }
+//         }
+//         i++;
+//    }
    
+// }
+
+//-------------------------------------------------------------
+
+std::vector<std::string> ft_split_with_comma(std::string list)
+{
+    std::vector<std::string> Container;
+    
+    std::istringstream iss(list);
+    std::string part;
+
+    
+    while(std::getline(iss, part, ','))
+    {
+        Container.push_back(part);
+    }
+
+    for(size_t i = 0; i < Container.size(); i++)
+    {
+        if(Container[i].empty() == true)
+            std::cout << "empty.." <<std::endl;
+        else
+            std::cout << Container[i] << std::endl;
+    }
+    return Container;
 }
 
-
 void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
 {
     if(Cmds.size() == 1)
@@ -166,12 +190,21 @@ void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
         std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
+    }
+    std::vector<std::string> channels = ft_split_with_comma(Cmds[1]);
+    std::vector<std::string> passwords;
+    if(Cmds.size() >= 3)
+     passwords = ft_split_with_comma(Cmds[2]);
+    
+    for(size_t i = 0; i < channels.size(); i++)
+    {
+        
     }
 }
 
 // remember if the pass word start with : takes all args and add space ...
 
-
+// case generate ==>   JOIN #channel1,#channel2,channel3 pass1,pass2,pass3
 //
 // must have threeargs 
 // check for other simple caeses ...

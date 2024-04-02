@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:38:48 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 14:15:45 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/02 23:27:20 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,7 @@ void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socke
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
     }
-    // Contains only one char
-    if(Cmds[1].size() <= 1)
-    {
-        
-        std::string msg = Client.getNickname() + "(462) :Invalid username";
-        ft_send(Socket, msg.c_str(), msg.size(), 0);
-        return;     
-    }
+
     
     Client.setUsername(Cmds[1]);
     
