@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 14:33:31 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:13:31 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class channel
 		bool InvitaionStatus;
 		bool TopicStatus;
 		bool AdminStatus;
+		bool limitStatus;		//l: Set/remove the user limit to channel
 
 		std::vector<client > Members;
 		std::vector<client > Admins;

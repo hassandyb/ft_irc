@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 16:07:35 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/04/06 13:32:38 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/04/06 18:46:37 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,11 @@ RM = rm -rf
 
 FLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g3
 
-CMD1 = $(addprefix CMD1/, cmd.cpp pass.cpp nick.cpp user.cpp join.cpp invite.cpp privmsg.cpp)
-# CMD2 = $(addprefix CMD2/, files ....)
+CMD = $(addprefix CMD/, cmd.cpp pass.cpp nick.cpp user.cpp join.cpp invite.cpp privmsg.cpp)
+
  SERVER = $(addprefix SERVER/, server.cpp client.cpp channel.cpp)
 
-SRC = main.cpp $(SERVER)  $(CMD1) #$(CMD2) 
+SRC = main.cpp $(SERVER)  $(CMD)
 
 OBJECTS = ./OBJECT_FILES
 

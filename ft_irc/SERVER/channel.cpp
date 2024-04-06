@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 14:34:28 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:13:59 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void channel::ft_channel_init()
 		this->TopicStatus = false;
 		this->PassWordStatus = false;
 		this->AdminStatus = false;
+		this->limitStatus = false;
 }
 // Getters / Setters : -----------------------------
 

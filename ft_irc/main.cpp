@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 10:09:46 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 20:46:23 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int main (int ac, char **av)
 	try
 	{
 		server s(av[1], av[2]);
-		// a function that buildes a server ...
+		// a function that buildes a server ... 
 
 		client c;// start modifing , just for testing ...
 		while(server::ReceivedSignal == false)
@@ -88,10 +88,7 @@ int main (int ac, char **av)
 
 
 
-			
 
-
-			
 			s.ft_execute_command(command, c, 1);
 			
 		}
