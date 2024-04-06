@@ -6,13 +6,11 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 13:48:01 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 15:08:00 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
-
-
 
 bool server::ft_channel_exist(std::string channel_name)
 {
