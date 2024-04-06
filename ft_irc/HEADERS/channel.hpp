@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 22:31:01 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:33:31 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ class channel
 		bool getPassWordStatus();
 		bool getAdminStatus();
 		
+		std::vector<client > getMembers();
+		std::vector<client > getAdmins();
+		std::vector<client > getInvited();
 		// utilts -----------------
 		
 		void ft_add_member(client & Client);
@@ -66,7 +69,9 @@ class channel
 		void ft_add_invited(client & Client);
 
 		bool ft_find_client(std::string list, std::string Nickname);// list == Members, admins, ...ext  return -1 if do no exist , return indice of it if it exist 
+		
 		std::string ft_list_admins_and_members();
 		bool ft_a_member_or_admin(std::string Nick);
+		
 		
 };

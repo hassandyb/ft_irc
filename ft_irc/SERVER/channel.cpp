@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/01 22:44:58 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:34:28 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,18 @@ bool channel::getPassWordStatus() {return this->PassWordStatus;}
 bool channel::getAdminStatus() {return this->AdminStatus;}
 
 // utils ----------------------------
-
-
 void channel::ft_add_member(client & Client) {this->Members.push_back(Client);}
 void channel::ft_add_admin(client & Client) {this->Admins.push_back(Client);}
 void channel::ft_add_invited(client & Client) {this->Invited.push_back(Client);}
+
+std::vector<client > channel::getMembers() {return Members;}
+std::vector<client > channel::getAdmins() {return Admins;}
+std::vector<client > channel::getInvited() {return Invited;}
+
+
+
+
+
 
 
 bool channel::ft_find_client(std::string list, std::string Nickname)
@@ -101,3 +108,9 @@ bool channel::ft_a_member_or_admin(std::string Nick)// checks wiether a client i
 	}
 	return false;
 }
+
+
+
+
+
+

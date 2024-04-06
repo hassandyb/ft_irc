@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 12:54:36 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 14:20:33 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 15:01:58 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,23 @@ void server::ft_priv_msg_channel(std::string Recipient_channel, client & Client,
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;
     }
+    
     // sending to all members and admins ...
     std::string msg = Client.getNickname() + " PRIVMSG " + Recipient_channel + ":" + message;
-
     
+    std::vector<client > Members = Channel.getMembers();
+    std::vector<client > Admins = Channel.getAdmins();
+    
+    for(size_t i = 0; i < Members.size(); i++)
+    {
+        if(Members[i].getNickname() != Client.getNickname())// no ned to send msg to the client why want to send the message ...
+            ft_send(Members[i].getSocket(), msg.c_str(), msg.size(), 0);
+    }
+    for(size_t i = 0; i < Admins.size(); i++)
+    {
+        if(Admins[i].getNickname() != Client.getNickname())
+            ft_send(Admins[i].getSocket(), msg.c_str(), msg.size(), 0);
+    }
 }
 
 void server::ft_privmsg(std::vector<std::string> Cmds, client & Client, int Socket)
