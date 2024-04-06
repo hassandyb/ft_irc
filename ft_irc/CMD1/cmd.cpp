@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 00:12:46 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:17:11 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,18 +116,19 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
         ft_nick(Cmds, Client, Socket);
         return;
     }
-    // if(ft_is_registred(Client, Socket) == false)
-    //     return;
+    if(ft_is_registred(Client, Socket) == false)
+        return;
+        
     if(Cmds[0] == "JOIN" || Cmds[0] == "join")
         ft_join(Cmds, Client, Socket);
         
-    // else if(Cmds[0] == "INVITE" || Cmds[0] == "invite")
-    //     ft_invite(Cmds, Client, Socket);
+    else if(Cmds[0] == "INVITE" || Cmds[0] == "invite")
+        ft_invite(Cmds, Client, Socket);
 
 
         
-    // else if(Cmds[0] == "PRIVMSG" || Cmds[0] == "privmsg")
-    //     ft_privmsg(Cmds, Client, Socket);
+    else if(Cmds[0] == "PRIVMSG" || Cmds[0] == "privmsg")
+        ft_privmsg(Cmds, Client, Socket);
     
     
     

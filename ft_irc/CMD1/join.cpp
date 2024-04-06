@@ -6,24 +6,13 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/03 17:09:04 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 13:48:01 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-std::vector<std::string> ft_split_with_comma(std::string list)
-{
-    std::vector<std::string> Container;
-    
-    std::istringstream iss(list);
-    std::string part;
-    while(std::getline(iss, part, ','))
-    {
-        Container.push_back(part);
-    }
-    return Container;
-}
+
 
 bool server::ft_channel_exist(std::string channel_name)
 {
@@ -85,7 +74,7 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
         return ;  
     }
     
-    // case 2 : channel already exit in the server
+    // case 2 : channel already exist in the server
 
     channel Channel = ft_find_channel(channel_name);
 

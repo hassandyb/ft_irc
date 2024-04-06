@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 12:54:36 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 00:34:16 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 14:20:33 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,75 @@
 // craete like the join styole
 // a a mian function the a function that 
 // privmsg p1,p2,g1p3, :hi gyus .. 
-  
+
+
+//   :Angel PRIVMSG Wiz :Hello are you receiving this message ?
+//                                   ; Message from Angel to Wiz.
+
+// :b!~b@localhost PRIVMSG #group :hiiiiii
+
+
+
+
+
+
+
+
+void server::ft_priv_msg_client(std::string Recipient_name, client & Client, std::string message)
+{
+    client Recipient = ft_get_client(Recipient_name);
+    std::string msg = Client.getNickname() + " PRIVMSG " + Recipient.getNickname() + ":" + message;
+    ft_send(Recipient.getSocket(), msg.c_str(), msg.size(), 0);
+}
+
+void server::ft_priv_msg_channel(std::string Recipient_channel, client & Client, std::string message)
+{
+    channel Channel = ft_get_a_channel(Recipient_channel);
+
+    // He cant send a message to a channel if he not a member :
+    if(Channel.ft_find_client("Members",Client.getNickname()) == false && Channel.ft_find_client("Admins",Client.getNickname()) == false)
+    {
+        std::string msg = Client.getNickname() + " " + Recipient_channel + " (404) :Cannot send to channel";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        return ;
+    }
+    // sending to all members and admins ...
+    std::string msg = Client.getNickname() + " PRIVMSG " + Recipient_channel + ":" + message;
+
+    
+}
+
 void server::ft_privmsg(std::vector<std::string> Cmds, client & Client, int Socket)
 {
-    if(Cmds.size() < 3)
+    if(Cmds.size() == 1)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
+        std::string msg = Client.getNickname() + " " + Cmds[0] + " (411) :No recipient given";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
+    }
+    if(Cmds.size() == 2)
+    {
+        std::string msg = Client.getNickname() + " " + Cmds[0] + " (412) :No text to send";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return ;        
     }
     std::vector<std::string > dst = ft_split_with_comma(Cmds[1]);
 
     for(size_t i = 0; i < dst.size(); i++)
     {
-        if()// if it a channelexist  == true ... sue a fucted of utils ...
+        if(ft_find_a_client(dst[i]) == true)
         {
-            // ft send to chane
+            ft_priv_msg_client(dst[i], Client, Cmds[2]);
         }
-        else if ()// it a ciletexist == true ...
+        else if (ft_find_a_channel(dst[i]) == true)
         {
-            
+            ft_priv_msg_channel(dst[i], Client, Cmds[2]);
         }
         else
         {
-            // send ..   401 #fsghjf :No such nick/channel
+            std::string msg = Client.getNickname() + " (401) :No such nick/channel";
+            ft_send(Socket, msg.c_str(), msg.size(), 0);
+
         }
     }
     
