@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 23:26:07 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:12:46 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ bool server::ft_send(int socket, const void * buff, size_t len, int flags)
     return true;
 }
 
-
 bool server::ft_is_registred(client & Client, int Socket)
 {
     if(Client.getRegestred() == false)
@@ -48,23 +47,60 @@ bool server::ft_is_registred(client & Client, int Socket)
     return true;
 }
 
+std::vector<std::string> ft_split_with_comma(std::string list)
+{
+    std::vector<std::string> Container;
+    
+    std::istringstream iss(list);
+    std::string part;
+    while(std::getline(iss, part, ','))
+    {
+        Container.push_back(part);
+    }
+    return Container;
+}
+
+void ft_split_with_spaces(std::vector<std::string> & Cmds, std::string Command)
+{
+    std::string split;
+    std::istringstream iss(Command);
+    
+    while(iss >> split)
+        Cmds.push_back(split);
+}
+
+std::vector<std::string>  ft_split_command(std::string Command)
+{
+
+
+    std::vector<std::string> Cmds;
+
+    // no : in the command
+    if(Command.find(":") == std::string::npos)
+    {
+        ft_split_with_spaces(Cmds, Command);
+        return Cmds;
+    }
+
+    // : exist in out coammnd
+    size_t pos = Command.find(":");
+    std::string after2points = Command.substr(pos + 1, Command.size() - pos - 1);
+    std::string befor2points = Command.substr(0, pos);
+
+    ft_split_with_spaces(Cmds, befor2points);
+    Cmds.push_back(after2points);
+    return Cmds;
+}
 
 void server::ft_execute_command(std::string Command, client & Client, int Socket)
 {
-    std::vector<std::string>::iterator it;
-    std::istringstream iss(Command);
-    std::string split;
-    std::vector<std::string> Cmds;
-    
-    while(iss >> split)
-    {
-        Cmds.push_back(split);
-    }
+
+    std::vector<std::string> Cmds = ft_split_command(Command);
+
     if(Cmds.size() == 0)
-        return;
-
+        return; 
     // Password stage and autotication satge 
-
+    
     if(Cmds[0] == "PASS" || Cmds[0] == "pass")
     {
         ft_pass(Cmds, Client, Socket);
@@ -80,15 +116,16 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
         ft_nick(Cmds, Client, Socket);
         return;
     }
-    if(ft_is_registred(Client, Socket) == false)
-        return;
-
-
+    // if(ft_is_registred(Client, Socket) == false)
+    //     return;
     if(Cmds[0] == "JOIN" || Cmds[0] == "join")
         ft_join(Cmds, Client, Socket);
         
-    else if(Cmds[0] == "INVITE" || Cmds[0] == "invite")
-        ft_invite(Cmds, Client, Socket);
+    // else if(Cmds[0] == "INVITE" || Cmds[0] == "invite")
+    //     ft_invite(Cmds, Client, Socket);
+
+
+        
     // else if(Cmds[0] == "PRIVMSG" || Cmds[0] == "privmsg")
     //     ft_privmsg(Cmds, Client, Socket);
     

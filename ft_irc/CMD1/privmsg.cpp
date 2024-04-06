@@ -6,18 +6,19 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 12:54:36 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 15:35:44 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:34:16 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-// std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
-// ft_send(Socket, msg.c_str(), msg.size(), 0);
-// return;
+
 
 // PRIVMSG <target>{,<target>} <text to be sent>
 
+// craete like the join styole
+// a a mian function the a function that 
+// privmsg p1,p2,g1p3, :hi gyus .. 
   
 void server::ft_privmsg(std::vector<std::string> Cmds, client & Client, int Socket)
 {
@@ -27,20 +28,36 @@ void server::ft_privmsg(std::vector<std::string> Cmds, client & Client, int Sock
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
+    std::vector<std::string > dst = ft_split_with_comma(Cmds[1]);
 
-    // 
-    if(ft_channel_exist(Cmds[i]) == false)
+    for(size_t i = 0; i < dst.size(); i++)
     {
-        channel new_channel;
-        new_channel.setName(Cmds[i]);
-        new_channel.ft_add_admin(Client);
-        this->Channels.push_back(new_channel);
-        
-       ft_join_message(Cmds, i, Client, new_channel);
-      return ;  
+        if()// if it a channelexist  == true ... sue a fucted of utils ...
+        {
+            // ft send to chane
+        }
+        else if ()// it a ciletexist == true ...
+        {
+            
+        }
+        else
+        {
+            // send ..   401 #fsghjf :No such nick/channel
+        }
     }
+    
 }
 
+
+
+
+// ft_main 
+// {
+//     chach args they should be 3 
+//     ft_splint chanels and clinet 
+//     if clinet send to clinet 
+//     is channel send to chanel 
+// }
 
 
 // privmsg #channel,client, #chennl, clinet :hi how are you doing to day 

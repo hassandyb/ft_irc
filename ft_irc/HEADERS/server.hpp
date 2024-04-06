@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 13:06:31 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:18:11 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ class server
 		void ft_nick(std::vector<std::string> & Cmds, client & Client, int Socket);
 		bool ft_nick_already_used(std::string nick);
 		void ft_inform_clients(std::string msg);
-		void ft_join_channel(std::vector<std::string> & Cmds, size_t i,  client & Client, bool password);
+		void ft_try_to_join(std::string channel_name, std::string password, client & Client);
 		void ft_join(std::vector<std::string> Cmds, client & Client, int Socket);
 		bool ft_channel_exist(std::string channel_name);
 		bool ft_send(int socket, const void * buff, size_t len, int flags);
 		channel & ft_find_channel(std::string channel_name);
-		void ft_join_message(std::vector<std::string> & Cmds, size_t i, client & Client, channel & Channel);
+		void ft_join_message(std::string & channel_name, client & Client, channel & new_channel);
 		void ft_invite(std::vector<std::string> Cmds, client & Client, int Socket);
 		void ft_privmsg(std::vector<std::string> Cmds, client & Client, int Socket);
 		// utilts -----------------
@@ -82,8 +82,11 @@ class server
 		bool ft_find_a_channel(std::string Channel_name);
 		channel & ft_get_a_channel(std::string Channel_name);
 		client & ft_get_client(std::string nick);
+		
+		
 };	
 
 
-
+std::vector<std::string> ft_split_with_comma(std::string list);
+void ft_split_with_spaces(std::vector<std::string> & Cmds, std::string Command);
 

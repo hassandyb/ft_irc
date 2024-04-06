@@ -6,12 +6,24 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 23:39:16 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/03 17:09:04 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
+std::vector<std::string> ft_split_with_comma(std::string list)
+{
+    std::vector<std::string> Container;
+    
+    std::istringstream iss(list);
+    std::string part;
+    while(std::getline(iss, part, ','))
+    {
+        Container.push_back(part);
+    }
+    return Container;
+}
 
 bool server::ft_channel_exist(std::string channel_name)
 {
@@ -23,23 +35,11 @@ bool server::ft_channel_exist(std::string channel_name)
     return false;
 }
 
-channel & server::ft_find_channel(std::string channel_name)// we use return reference because we need to ake actuall changes to out channel
+void server::ft_join_message(std::string & channel_name, client & Client, channel & new_channel)
 {
-    size_t i;
-    for( i = 0; i < Channels.size(); i++)
-    {
-        if(channel_name == this->Channels[i].getName())
-            return this->Channels[i];
-    }
-    return this->Channels[i];
-
-}
-
-void server::ft_join_message(std::vector<std::string> & Cmds, size_t i, client & Client, channel & Channel)
-{
-        std::string msg1 = ":" + Client.getNickname() + "!" + Client.getNickname() + "@127.0.0.1 JOIN " + Cmds[i];
-        std::string msg2 = ": 353 " + Client.getNickname() + " @ " + Cmds[i] + " :" + Channel.ft_list_admins_and_members();
-        std::string msg3 = ": 366 " + Client.getNickname() + " " + Cmds[i] + " :END of /NAMES list";
+        std::string msg1 = ":" + Client.getNickname() + "!" + Client.getNickname() + "@127.0.0.1 JOIN " + channel_name;
+        std::string msg2 = ": 353 " + Client.getNickname() + " @ " + channel_name + " :" + new_channel.ft_list_admins_and_members();
+        std::string msg3 = ": 366 " + Client.getNickname() + " " + channel_name + " :END of /NAMES list";
         
         // send to client 
         ft_send(Client.getSocket(), msg1.c_str(), msg1.size(), 0);
@@ -50,137 +50,65 @@ void server::ft_join_message(std::vector<std::string> & Cmds, size_t i, client &
         std::cout << std::endl;
         std::cout << msg1 << std::endl;
         std::cout << msg2 << std::endl;
-        std::cout << msg3 << std::endl;    
+        std::cout << msg3 << std::endl;        
 }
 
-void server::ft_join_channel(std::vector<std::string> & Cmds, size_t i, client & Client, bool password)
+channel & server::ft_find_channel(std::string channel_name)// we use return reference because we need to ake actuall changes to out channel
 {
-    // case zero : entered only #
-    if(Cmds.size() == 1)
+    size_t i;
+    for( i = 0; i < Channels.size(); i++)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[i] + " 475 :Cannot join channel (+k)";
+        if(channel_name == this->Channels[i].getName())
+            return this->Channels[i];
+    }
+    return this->Channels[i];
+}
+  
+void server::ft_try_to_join(std::string channel_name, std::string password, client & Client)
+{
+
+    if(channel_name.at(0) != '#' || channel_name.size() == 1)
+    {
+        std::string msg = Client.getNickname() + " " + channel_name + " 475 :No such channel";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;        
     }
-    // case 1 : channel does no exist in channels #########################################
-    if(ft_channel_exist(Cmds[i]) == false)
+    // case 1 : channel does no exist in channels
+    if(ft_channel_exist(channel_name) == false)
     {
         channel new_channel;
-        new_channel.setName(Cmds[i]);
+        new_channel.setName(channel_name);
         new_channel.ft_add_admin(Client);
         this->Channels.push_back(new_channel);
         
-       ft_join_message(Cmds, i, Client, new_channel);
-      return ;  
+        ft_join_message(channel_name, Client, new_channel);
+        return ;  
     }
     
-    // case 2 : channel does exist #########################################
-    (void)password;
-    channel Channel = ft_find_channel(Cmds[i]);
-    
-    // invite only channel 
+    // case 2 : channel already exit in the server
+
+    channel Channel = ft_find_channel(channel_name);
+
+    //  error: invite only channel 
     if(Channel.ft_find_client("Invited", Client.getNickname()) == false)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[i] + " :Cannot join channel (+i)";
+        std::string msg = Client.getNickname() + " " + channel_name + " :Cannot join channel (+i)";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;
     }
-    else
-    {
-        Channel.ft_add_member(Client);
-        ft_join_message(Cmds, i, Client, Channel);
-        return ;
-    }
-    
-    // channel require a password
+            
+    // error : channel requries a password ..
     if(Channel.getPassWordStatus() == true)
     {
-        bool err = false;
-        
-        // cases 
-        if(password == false)// No password entered after args 
-            err = true;
-        if(password == true)// there is a password after the channel name
+        if(password.empty() == true|| Channel.getPassword() != password)
         {
-            if(Cmds[i + 1] == Channel.getPassword())
-                err = true;
-        }
-        
-        if(err == true)
-        {
-            std::string msg = Client.getNickname() + " " + Cmds[i] + " (475) :Cannot join channel (+k)";
+            std::string msg = Client.getNickname() + " " + channel_name + " (475) :Cannot join channel (+k)";
             ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+            return ;
         }
-        else
-        {
-            Channel.ft_add_member(Client);
-            ft_join_message(Cmds, i, Client, Channel);
-        }
-        return ;
     }
- 
-}
-
-// void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
-// {
-//     if(Cmds.size() == 1)
-//     {
-//         std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
-//         ft_send(Socket, msg.c_str(), msg.size(), 0);
-//         return;
-//     }
-//     if(Cmds[1].at(0) != '#')
-//     {
-//         std::string msg = Client.getNickname() + " localhost (403) :No such channel";
-//         ft_send(Socket, msg.c_str(), msg.size(), 0);
-//         return ;
-//     }
-//     size_t i = 1;
-//    while(i < Cmds.size())
-//    {
-//         bool password;
-//         if(Cmds[i].at(0) == '#')
-//         {
-            
-//             if(i + 1 >= Cmds.size())
-//                 password = false;
-//             if(i + 1 < Cmds.size())
-//             {
-//                 if(Cmds[i + 1].at(0) == '#')
-//                 password = false;
-//             }
-//             password = true;
-//             ft_join_channel(Cmds, i, Client, password);
-            
-//         }
-//         i++;
-//    }
-   
-// }
-
-//-------------------------------------------------------------
-
-std::vector<std::string> ft_split_with_comma(std::string list)
-{
-    std::vector<std::string> Container;
-    
-    std::istringstream iss(list);
-    std::string part;
-
-    
-    while(std::getline(iss, part, ','))
-    {
-        Container.push_back(part);
-    }
-
-    for(size_t i = 0; i < Container.size(); i++)
-    {
-        if(Container[i].empty() == true)
-            std::cout << "empty.." <<std::endl;
-        else
-            std::cout << Container[i] << std::endl;
-    }
-    return Container;
+    Channel.ft_add_member(Client);
+    ft_join_message(channel_name, Client, Channel);
 }
 
 void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
@@ -191,34 +119,23 @@ void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
     }
-    std::vector<std::string> channels = ft_split_with_comma(Cmds[1]);
+    std::vector<std::string> channels_names = ft_split_with_comma(Cmds[1]);
+
+
+
     std::vector<std::string> passwords;
     if(Cmds.size() >= 3)
-     passwords = ft_split_with_comma(Cmds[2]);
+        passwords = ft_split_with_comma(Cmds[2]);
+
     
-    for(size_t i = 0; i < channels.size(); i++)
+    for(size_t i = 0; i < channels_names.size(); i++)
     {
-        
+        if(i < passwords.size())
+            ft_try_to_join(channels_names[i], passwords[i], Client);
+        else
+        {
+            std::string empty;
+            ft_try_to_join(channels_names[i], empty, Client);
+        }
     }
 }
-
-// remember if the pass word start with : takes all args and add space ...
-
-// case generate ==>   JOIN #channel1,#channel2,channel3 pass1,pass2,pass3
-//
-// must have threeargs 
-// check for other simple caeses ...
-
-
-// spli all and take each chanell with its pass word
-
-// now we have tow cases
-
-// case 1 created first time 
-    // egnore the password (casue in its creation the chnnale pass word status set to false)
-// caes 2 it s alread exist 
-    // ==> passwordstatus == false ==>join him directly
-    // ==> passwordstatus == true =>the password should max the one entred by the client... 
-
-
-
