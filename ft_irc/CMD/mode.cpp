@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/07 16:19:39 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/07 17:18:09 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,24 @@
 // mode +ilo pp
 // mode +i hh +o jj +jhf 
 
-
+//            mode #group +-++olg arg1 arg2 arg3
 
 void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket)
 {
-    // 0 : size == 0  ==:Not enough parameters.
+    // 0 : size == 1  ==:Not enough parameters.
 
+    if(Cmds.size() == 1)
+    {
+        std::string msg = Client.getNickname() + " MODE " + "(461) :Not enough parameters";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return ;
+    }
+// (hostname, channel, nick) ":" + hostname + " 403 " + nick + " " + channel + " :No such channel\r\n"
+
+    if(this->ft_find_a_channel(Cmds[1]) == false)
+    {
+        // std::string msg = ":"
+    }
     // 1 chek that this channel exsit
     // no such channel/client ==>:No such channel
 
@@ -41,7 +53,7 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
     // : 329 a #group 1712499970
     // return 
 
-    
+    // 4 --sue switch ..
     // falg == sign 
     // and llop on arg 3 and send the the send evry time the function get s
     
