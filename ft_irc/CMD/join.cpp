@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 15:08:00 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/07 15:47:09 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,14 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
             return ;
         }
     }
+    // error : channel channel has limit ...
+    if(Channel.getLimitStatus() == true && Channel.ft_channel_size() >= Channel.getLimit())
+    {
+        std::string msg = Client.getNickname() + " " + channel_name + " (471) :Cannot join channel (+l)";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        return ;
+    }
+    
     Channel.ft_add_member(Client);
     ft_join_message(channel_name, Client, Channel);
 }
