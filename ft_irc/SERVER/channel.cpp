@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/07 15:43:24 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:06:05 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ bool channel::getTopicStatus() {return this->TopicStatus;}
 bool channel::getPassWordStatus() {return this->PassWordStatus;}
 bool channel::getAdminStatus() {return this->AdminStatus;}
 bool channel::getLimitStatus() {return this->LimitStatus;}
-
-
 
 
 
@@ -113,9 +111,6 @@ bool channel::ft_a_member_or_admin(std::string Nick)// checks wiether a client i
 	}
 	return false;
 }
-
-// std::vector<client > Members;
-// std::vector<client > Admins;
 		
 size_t channel::ft_channel_size()
 {
@@ -128,5 +123,24 @@ size_t channel::ft_channel_size()
 	return i + j;
 }
 
+
+// +itkl
+std::string channel::ft_get_mode()
+{
+	std::string mode;
+
+	if(this->getInvitaionStatus() == true)
+		mode = "i";
+	if(this->getTopicStatus() == true)
+		mode = mode + "t";
+	if(this->getPassWordStatus() == true)
+		mode = mode + "k";
+	if(this->getLimitStatus() == true)
+		mode = mode + "l";
+
+	if(mode.empty() == false)
+		mode = "+" + mode;
+	return mode;
+}
 
 

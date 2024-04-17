@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/07 17:18:09 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:04:48 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,54 @@
 // mode +ilo pp
 // mode +i hh +o jj +jhf 
 
-//            mode #group +-++olg arg1 arg2 arg3
+//mode #group +-++olg arg1 arg2 arg3
 
 void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket)
 {
     // 0 : size == 1  ==:Not enough parameters.
 
+
+
+
+
+    
+
     if(Cmds.size() == 1)
     {
-        std::string msg = Client.getNickname() + " MODE " + "(461) :Not enough parameters";
+        std::string msg = " 461 " + Client.getNickname() + " :Not enough parameters !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
-// (hostname, channel, nick) ":" + hostname + " 403 " + nick + " " + channel + " :No such channel\r\n"
 
     if(this->ft_find_a_channel(Cmds[1]) == false)
     {
-        // std::string msg = ":"
+        std::string msg = ": 403 " + Client.getNickname() + " " + Cmds[1] + " :No such channel\r\n";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return ;
     }
-    // 1 chek that this channel exsit
-    // no such channel/client ==>:No such channel
+   channel Channel = ft_get_a_channel(Cmds[1]);
+    std::string Client_name = Client.getNickname();
+    if(Channel.ft_find_client("Members", Client_name) == false && Channel.ft_find_client("Admins", Client_name) == false)
+    {
+         std::string msg = ": 442 " + Cmds[1] + " " + ":You're not on that channel\r\n";
+         ft_send(Socket, msg.c_str(), msg.size(), 0);
+         return ;
+    }
 
-    
-    
-    // 2 : first check that this client is operator ...(you are not chennl operator)
-    //  :You're not on that channel\r\n  (442)
-    
 
-    // 3   hndl : mode #group without flag no need to be operator 
-    // if(size == 2)
+    // 3 hndl : mode #group without flag no need to be operator 
+
+    // ":" + hostname + " 329 " + nick + " " + channelName + " " + time + "\r\n"
+
+    // ":" + hostname + " 329 " + nick + " " + channelName + " " + time + "\r\n"
+    if(Cmds.size() == 2)
+    {
+        std::string msg = ": 324 " + Client.getNickname() + " " + Channel.getName() + " " + Channel.ft_get_mode() + "\r\n";
+        
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return ;
+    }
+    
     // gets 
     // mode #group
     // : 324 a #group +tk

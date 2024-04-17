@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/07 15:43:40 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 17:52:06 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ class channel
 		std::string ft_list_admins_and_members();
 		bool ft_a_member_or_admin(std::string Nick);
 		size_t ft_channel_size();
+		std::string ft_get_mode();
 		
 		
 };
