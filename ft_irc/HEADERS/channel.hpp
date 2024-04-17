@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/17 17:52:06 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 22:04:38 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "client.hpp"
 #include <iostream>
 #include <vector>
+#include <sstream> 
 
 class client;
 
@@ -34,6 +35,8 @@ class channel
 		std::vector<client > Members;
 		std::vector<client > Admins;
 		std::vector<client > Invited;
+
+		time_t Creationtime;
 			
 	public :
 		channel();
@@ -81,5 +84,7 @@ class channel
 		size_t ft_channel_size();
 		std::string ft_get_mode();
 		
+		void ft_save_creation_time();
+		std::string ft_get_creation_time();
 		
 };

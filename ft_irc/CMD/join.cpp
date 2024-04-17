@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/07 15:47:09 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 21:23:56 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
         channel new_channel;
         new_channel.setName(channel_name);
         new_channel.ft_add_admin(Client);
+        new_channel.ft_save_creation_time();
         this->Channels.push_back(new_channel);
         
         ft_join_message(channel_name, Client, new_channel);

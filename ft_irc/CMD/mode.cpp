@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/17 19:04:48 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 22:11:59 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // mode +ilo pp
 // mode +i hh +o jj +jhf 
 
-//mode #group +-++olg arg1 arg2 arg3
+
 
 void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket)
 {
@@ -52,43 +52,41 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
          return ;
     }
 
-
-    // 3 hndl : mode #group without flag no need to be operator 
-
-    // ":" + hostname + " 329 " + nick + " " + channelName + " " + time + "\r\n"
-
-    // ":" + hostname + " 329 " + nick + " " + channelName + " " + time + "\r\n"
-    if(Cmds.size() == 2)
+    if(Cmds.size() == 2 && (Channel.ft_find_client("Members", Client_name) == false || Channel.ft_find_client("Admins", Client_name) == false))
     {
-        std::string msg = ": 324 " + Client.getNickname() + " " + Channel.getName() + " " + Channel.ft_get_mode() + "\r\n";
-        
-        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        std::string msg1 = ": 324 " + Client.getNickname() + " " + Channel.getName() + " " + Channel.ft_get_mode() + "\r\n";
+        std::string msg2 = ": 329 " + Client.getNickname() + " " + Channel.getName() + " " + Channel.ft_get_creation_time() + "\r\n";
+        ft_send(Socket, msg1.c_str(), msg1.size(), 0);
+        ft_send(Socket, msg2.c_str(), msg2.size(), 0);
         return ;
     }
-    
-    // gets 
-    // mode #group
-    // : 324 a #group +tk
-    // : 329 a #group 1712499970
-    // return 
-
-    // 4 --sue switch ..
-    // falg == sign 
-    // and llop on arg 3 and send the the send evry time the function get s
-    
-    // siemd the type => iot..
-    // flag true == + - false = -
-    // tow caese requre arg - dont require an arg 
 
     
-    // the argumet , or empty if there nothing if it requires one 
+    std::string Modestr = Cmds[2];
+    size_t j = 3;// args ...
+    bool sign = true;
+    for(size_t i = 0; Modestr.size(); i++)
+    {
+        // if 
+        // esle if ...ext 
+        // else
+            // 472 " + nick + " " + channel + " " + character + " :is unknown mode char to me\r\n"
+            
     
-    // size 
-    // case jsut mode chennl ==>return chennl data ..
-    // check size == 1 ==> 2 eerr
-    // check size == 2 ==> 3 rror 
-    // 
+    }
+    //mode #group +-++olg arg1 arg2 arg3
 
-    //create a forr loop loeapoing on the arg3 
+    //      ":" + hostname + " 472 " + nick + " " + channel + " " + character + " :is unknown mode char to me\r\n"
+
+
+
+
+    
+
+
+    
+
+    
+
     
 }

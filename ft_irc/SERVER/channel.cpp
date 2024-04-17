@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/17 18:06:05 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 22:05:00 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,15 @@ std::string channel::ft_get_mode()
 	return mode;
 }
 
+void channel::ft_save_creation_time()
+{
+	this->Creationtime = std::time(NULL);
+}
 
+std::string channel::ft_get_creation_time()
+{
+	std::ostringstream os;
+	os << this->Creationtime;
+	
+	return os.str();
+}

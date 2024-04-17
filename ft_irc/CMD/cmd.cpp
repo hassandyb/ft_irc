@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 17:45:11 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/17 21:52:45 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     
     
     
-    // else if(Cmds[0] == "MODE" || Cmds[0] == "mode")
-    //     ft_mode(Cmds, Client, Socket);
+    else if(Cmds[0] == "MODE" || Cmds[0] == "mode")
+        ft_mode(Cmds, Client, Socket);
 
 
 
