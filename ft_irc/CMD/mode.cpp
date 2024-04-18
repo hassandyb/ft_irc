@@ -6,29 +6,44 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/17 22:11:59 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/18 15:49:38 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
 
-// mode +o hdg
 
-// mode +ilo pp
-// mode +i hh +o jj +jhf 
+                // +i (invite-only):
+                // /mode #channel +i
+                // /mode #channel -i
+                
+                // +t (topic):
+                // /mode #channel +t
+                // /mode #channel -t
+                
+                // +k (key):
+                // /mode #channel +k password
+                // /mode #channel -k
+                
+                // +o (operator):
+                // /mode #channel +o nickname
+                // /mode #channel -o nickname
+                
+                // +l (limit):
+                // /mode #channel +l limit
+                // /mode #channel -l
 
-
+void ft_mode_invite(channel & Channel, client & Client, bool sign)
+{
+    
+}
 
 void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket)
 {
     // 0 : size == 1  ==:Not enough parameters.
 
 
-
-
-
-    
 
     if(Cmds.size() == 1)
     {
@@ -45,13 +60,6 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
     }
    channel Channel = ft_get_a_channel(Cmds[1]);
     std::string Client_name = Client.getNickname();
-    if(Channel.ft_find_client("Members", Client_name) == false && Channel.ft_find_client("Admins", Client_name) == false)
-    {
-         std::string msg = ": 442 " + Cmds[1] + " " + ":You're not on that channel\r\n";
-         ft_send(Socket, msg.c_str(), msg.size(), 0);
-         return ;
-    }
-
     if(Cmds.size() == 2 && (Channel.ft_find_client("Members", Client_name) == false || Channel.ft_find_client("Admins", Client_name) == false))
     {
         std::string msg1 = ": 324 " + Client.getNickname() + " " + Channel.getName() + " " + Channel.ft_get_mode() + "\r\n";
@@ -60,23 +68,73 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
         ft_send(Socket, msg2.c_str(), msg2.size(), 0);
         return ;
     }
+    if(Channel.ft_find_client("Admins", Client_name) == false)
+    {
+         std::string msg = ": 482 " + Cmds[1] + " " + ":You're not a channel operator\r\n";
+         ft_send(Socket, msg.c_str(), msg.size(), 0);
+         return ;
+    }
+
+
 
     
     std::string Modestr = Cmds[2];
     size_t j = 3;// args ...
     bool sign = true;
+    std::string empty;
+    //mode #group +-++olg arg1 arg2 arg3
+    // +itkl   o -
+    //      ":" + hostname + " 472 " + nick + " " + channel + " " + character + " :is unknown mode char to me\r\n"
+    
     for(size_t i = 0; Modestr.size(); i++)
     {
-        // if 
-        // esle if ...ext 
-        // else
-            // 472 " + nick + " " + channel + " " + character + " :is unknown mode char to me\r\n"
+        if(Modestr.at(i) == '+')
+            sign = true;
+        else if (Modestr.at(i) == '-')
+            sign = false;
+
+        else if (Modestr.at(i) == 'i')
+            ft_mode_invite(Channel, Client, sign);
+            
+        // else if(Modestr.at(i) == 't')
+            // ft_mode_topic(Channel, Client, sign)
+
+        // else if(Modestr.at(i) == 'k')
+        // {
+        //     if(j < Cmds.size())
+        //         ft_mode_password(Channel, Client, sign, Cmds[j]);
+        //     else
+        //         ft_mode_password(Channel, Client, sign, empty);
+                // j++;
+        // }
+            
+        // else if(Modestr.at(i) == 'l')
+        // {
+        //     if(j < Cmds.size())
+        //         ft_mode_limit(Channel, Client, sign, Cmds[j]);
+        //     else
+        //         ft_mode_limit(Channel, Client, sign, empty);
+        //     j++;
+                
+        // }
+        // else if(Modestr.at(i) == 'o')
+        // {
+        //     if(j < Cmds.size())
+        //         ft_mode_operator(Channel, Client, sign, Cmds[j]);
+        //     else
+        //         ft_mode_operator(Channel, Client, sign, empty);
+        //     j++;
+        // }
+        else
+        {
+            std::string msg = ": 472 " + Client.getNickname() + " " + Channel.getName() + " " + Modestr.at(i) + " :is unknown mode char to me\r\n";
+            ft_send(Socket, msg.c_str(), msg.size(), 0);
+        }
+
+            
             
     
     }
-    //mode #group +-++olg arg1 arg2 arg3
-
-    //      ":" + hostname + " 472 " + nick + " " + channel + " " + character + " :is unknown mode char to me\r\n"
 
 
 
