@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/18 15:49:38 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:51:33 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 
 
-                // +i (invite-only):
-                // /mode #channel +i
-                // /mode #channel -i
+
                 
                 // +t (topic):
                 // /mode #channel +t
@@ -34,16 +32,51 @@
                 // /mode #channel +l limit
                 // /mode #channel -l
 
-void ft_mode_invite(channel & Channel, client & Client, bool sign)
+
+                // +i (invite-only):
+                // /mode #channel +i
+                // /mode #channel -i
+void server::ft_mode_invite(channel & Channel, client & Client, bool sign)
 {
-    
+    // :a!a MODE #group -l == 
+    // bool server::ft_send(int socket, const void * buff, size_t len, int flags)
+    if(sign == true && Channel.getInvitaionStatus() == false)
+    {
+        Channel.setInvitaionStatus(true);
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " +i\r\n";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+    }
+    if(sign == false && Channel.getInvitaionStatus() == true)
+    {
+        Channel.setInvitaionStatus(false);
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " -i\r\n";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+    }
 }
+
+void server::ft_mode_topic(channel & Channel, client & Client, bool sign)
+{
+    if(sign == true && Channel.getTopicStatus() == false)
+    {
+        Channel.setTopicStatus(true);
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " +t\r\n";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+    }
+    if(sign == false && Channel.getTopicStatus() == false)
+    {
+        Channel.setTopicStatus(false);
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " -t\r\n";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+    }
+}
+
+
+
+
+
 
 void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket)
 {
-    // 0 : size == 1  ==:Not enough parameters.
-
-
 
     if(Cmds.size() == 1)
     {
@@ -96,8 +129,8 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
         else if (Modestr.at(i) == 'i')
             ft_mode_invite(Channel, Client, sign);
             
-        // else if(Modestr.at(i) == 't')
-            // ft_mode_topic(Channel, Client, sign)
+        else if(Modestr.at(i) == 't')
+            ft_mode_topic(Channel, Client, sign)
 
         // else if(Modestr.at(i) == 'k')
         // {

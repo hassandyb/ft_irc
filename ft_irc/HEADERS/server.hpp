@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/17 21:18:03 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:22:19 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ class server
 		void ft_priv_msg_client(std::string Recipient_name, client & Client, std::string message);
 		void ft_priv_msg_channel(std::string Recipient_channel, client & Client, std::string message);
 		void ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket);
+		void ft_mode_invite(channel & Channel, client & Client, bool sign);
+		void ft_mode_topic(channel & Channel, client & Client, bool sign);
 		// utilts -----------------
 
 		bool ft_find_a_client(std::string Nick);
