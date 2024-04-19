@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/18 18:22:19 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:17:27 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ class server
 		void ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket);
 		void ft_mode_invite(channel & Channel, client & Client, bool sign);
 		void ft_mode_topic(channel & Channel, client & Client, bool sign);
+		void ft_mode_password(channel & Channel, client & Client, bool sign, std::string arg);
 		// utilts -----------------
 
 		bool ft_find_a_client(std::string Nick);

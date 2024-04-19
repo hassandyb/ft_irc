@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/18 18:51:33 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:49:30 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,32 @@ void server::ft_mode_topic(channel & Channel, client & Client, bool sign)
         std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " +t\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
     }
-    if(sign == false && Channel.getTopicStatus() == false)
+    if(sign == false && Channel.getTopicStatus() == true)
     {
         Channel.setTopicStatus(false);
         std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " -t\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
     }
 }
+//            ":" + hostname + " 696 " + channel + " " + flag + " * you must specifiy a parameter for the op mode\r\n"
+//          : 696 #group * You must specify a parameter for the key mode. (k)
 
+void server::ft_mode_password(channel & Channel, client & Client, bool sign, std::string Password)
+{
+    if(Password.empty() == true)// case no passwrd entred
+    {
+        std::string msg = ": 696 " + Channel.getName() + " (k) * you must specifiy a parameter for the op mode\r\n";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        return;
+    }
+    if(sign == true)// case +k
+    {
+        // set the password
+        //:a!a MODE #group +k 123
+        // 473 to 475, 
+        // send the password to all use a fucntion ...
+    }
+}
 
 
 
@@ -130,16 +148,16 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
             ft_mode_invite(Channel, Client, sign);
             
         else if(Modestr.at(i) == 't')
-            ft_mode_topic(Channel, Client, sign)
+            ft_mode_topic(Channel, Client, sign);
 
-        // else if(Modestr.at(i) == 'k')
-        // {
-        //     if(j < Cmds.size())
-        //         ft_mode_password(Channel, Client, sign, Cmds[j]);
-        //     else
-        //         ft_mode_password(Channel, Client, sign, empty);
-                // j++;
-        // }
+        else if(Modestr.at(i) == 'k')
+        {
+            if(j < Cmds.size())
+                ft_mode_password(Channel, Client, sign, Cmds[j]);
+            else
+                ft_mode_password(Channel, Client, sign, empty);
+                j++;
+        }
             
         // else if(Modestr.at(i) == 'l')
         // {
