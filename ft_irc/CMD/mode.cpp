@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/19 13:49:30 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:49:08 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,7 @@
 
 
                 
-                // +t (topic):
-                // /mode #channel +t
-                // /mode #channel -t
-                
-                // +k (key):
-                // /mode #channel +k password
-                // /mode #channel -k
-                
-                // +o (operator):
-                // /mode #channel +o nickname
-                // /mode #channel -o nickname
-                
-                // +l (limit):
-                // /mode #channel +l limit
-                // /mode #channel -l
 
-
-                // +i (invite-only):
-                // /mode #channel +i
-                // /mode #channel -i
 void server::ft_mode_invite(channel & Channel, client & Client, bool sign)
 {
     // :a!a MODE #group -l == 
@@ -82,10 +63,26 @@ void server::ft_mode_password(channel & Channel, client & Client, bool sign, std
     }
     if(sign == true)// case +k
     {
-        // set the password
-        //:a!a MODE #group +k 123
-        // 473 to 475, 
-        // send the password to all use a fucntion ...
+        Channel.setPassword(Password);
+        Channel.setPassWordStatus(true);
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " +k " + Password + "\r\n";
+        ft_send_msg_to_all(Channel.getMembers(), msg);
+        ft_send_msg_to_all(Channel.getAdmins(), msg); 
+    }
+    if(sign == false)// case -k
+    {
+
+        if(Channel.getPassword() != Password) // incorect password
+        {
+            std::string msg = ": 467 " + Channel.getName() + " Channel key already set.\r\n";
+            ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        }
+        else //  :a!a MODE #group -k 
+        {
+            std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " -k\r\n";
+            ft_send_msg_to_all(Channel.getMembers(), msg);
+            ft_send_msg_to_all(Channel.getAdmins(), msg); 
+        }
     }
 }
 

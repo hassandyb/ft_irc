@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/17 22:04:38 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/19 14:32:55 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ class channel
 		
 		void ft_save_creation_time();
 		std::string ft_get_creation_time();
+		
 		
 };
