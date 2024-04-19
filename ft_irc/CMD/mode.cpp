@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:07:01 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/19 15:49:08 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/19 18:07:41 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void server::ft_mode_invite(channel & Channel, client & Client, bool sign)
     if(sign == true && Channel.getInvitaionStatus() == false)
     {
         Channel.setInvitaionStatus(true);
-        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " +i\r\n";
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +i\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
     }
     if(sign == false && Channel.getInvitaionStatus() == true)
     {
         Channel.setInvitaionStatus(false);
-        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " -i\r\n";
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " -i\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
     }
 }
@@ -40,18 +40,16 @@ void server::ft_mode_topic(channel & Channel, client & Client, bool sign)
     if(sign == true && Channel.getTopicStatus() == false)
     {
         Channel.setTopicStatus(true);
-        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " +t\r\n";
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +t\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
     }
     if(sign == false && Channel.getTopicStatus() == true)
     {
         Channel.setTopicStatus(false);
-        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " -t\r\n";
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " -t\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
     }
 }
-//            ":" + hostname + " 696 " + channel + " " + flag + " * you must specifiy a parameter for the op mode\r\n"
-//          : 696 #group * You must specify a parameter for the key mode. (k)
 
 void server::ft_mode_password(channel & Channel, client & Client, bool sign, std::string Password)
 {
@@ -65,7 +63,7 @@ void server::ft_mode_password(channel & Channel, client & Client, bool sign, std
     {
         Channel.setPassword(Password);
         Channel.setPassWordStatus(true);
-        std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " +k " + Password + "\r\n";
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +k " + Password + "\r\n";
         ft_send_msg_to_all(Channel.getMembers(), msg);
         ft_send_msg_to_all(Channel.getAdmins(), msg); 
     }
@@ -79,13 +77,22 @@ void server::ft_mode_password(channel & Channel, client & Client, bool sign, std
         }
         else //  :a!a MODE #group -k 
         {
-            std::string msg = ":" + Client.getNickname() + "!" + Client.getNickname() + " MODE " + Channel.getName() + " -k\r\n";
+            std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " -k\r\n";
             ft_send_msg_to_all(Channel.getMembers(), msg);
             ft_send_msg_to_all(Channel.getAdmins(), msg); 
         }
     }
 }
 
+void server::ft_mode_limit(channel & Channel, client & Client, bool sign, std::string max)
+{
+    // +l only needs the limit  -l dont recuise anything 
+    // : 696 #group * You must specify a parameter for the key mode. (l)
+
+    // case +k
+
+    // case -k 
+}
 
 
 
@@ -122,17 +129,10 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
          ft_send(Socket, msg.c_str(), msg.size(), 0);
          return ;
     }
-
-
-
-    
     std::string Modestr = Cmds[2];
     size_t j = 3;// args ...
     bool sign = true;
     std::string empty;
-    //mode #group +-++olg arg1 arg2 arg3
-    // +itkl   o -
-    //      ":" + hostname + " 472 " + nick + " " + channel + " " + character + " :is unknown mode char to me\r\n"
     
     for(size_t i = 0; Modestr.size(); i++)
     {
@@ -155,16 +155,14 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
                 ft_mode_password(Channel, Client, sign, empty);
                 j++;
         }
-            
-        // else if(Modestr.at(i) == 'l')
-        // {
-        //     if(j < Cmds.size())
-        //         ft_mode_limit(Channel, Client, sign, Cmds[j]);
-        //     else
-        //         ft_mode_limit(Channel, Client, sign, empty);
-        //     j++;
-                
-        // }
+        else if(Modestr.at(i) == 'l')
+        {
+            if(j < Cmds.size())
+                ft_mode_limit(Channel, Client, sign, Cmds[j]);
+            else
+                ft_mode_limit(Channel, Client, sign, empty);
+            j++;  
+        }
         // else if(Modestr.at(i) == 'o')
         // {
         //     if(j < Cmds.size())
