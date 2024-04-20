@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:30:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 15:04:42 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:07:26 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,6 @@ bool server::ft_send(int socket, const void * buff, size_t len, int flags)
     //     std::cerr << "Send() failed to send respond!" << std::endl;
     //     return false;
     // }
-    return true;
-}
-
-bool server::ft_is_registred(client & Client, int Socket)
-{
-    if(Client.getRegestred() == false)
-    {
-        std::string msg = Client.getNickname() + " (451) :You have not registered";
-        ft_send(Socket, msg.c_str(), msg.size(), 0);
-        return false;
-    }
     return true;
 }
 

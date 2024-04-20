@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 20:46:23 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:08:51 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,6 @@ void server::ft_signal_handler(int signum)
 	// close clients sockets and pollfd soket  .. use a function ft_quit();
 	server::ReceivedSignal = true;
 }
-
-
-
 
 int main (int ac, char **av)
 {

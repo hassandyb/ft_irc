@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 15:00:56 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:08:02 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ class server
 		void ft_try_to_join(std::string channel_name, std::string password, client & Client);
 		void ft_join(std::vector<std::string> Cmds, client & Client, int Socket);
 		bool ft_channel_exist(std::string channel_name);
-		bool ft_send(int socket, const void * buff, size_t len, int flags);
 		channel & ft_find_channel(std::string channel_name);
 		void ft_join_message(std::string & channel_name, client & Client, channel & new_channel);
 		void ft_invite(std::vector<std::string> Cmds, client & Client, int Socket);
@@ -83,8 +82,12 @@ class server
 		void ft_mode_topic(channel & Channel, client & Client, bool sign);
 		void ft_mode_password(channel & Channel, client & Client, bool sign, std::string arg);
 		void ft_mode_limit(channel & Channel, client & Client, bool sign, std::string max);
-		// utilts -----------------
 
+		// utilts -----------------
+		
+
+
+		bool ft_send(int socket, const void * buff, size_t len, int flags);
 		bool ft_find_a_client(std::string Nick);
 		bool ft_find_a_channel(std::string Channel_name);
 		channel & ft_get_a_channel(std::string Channel_name);
@@ -98,4 +101,3 @@ class server
 std::vector<std::string> ft_split_with_comma(std::string list);
 void ft_split_with_spaces(std::vector<std::string> & Cmds, std::string Command);
 size_t ft_string_to_size_t(std::string str);
-
