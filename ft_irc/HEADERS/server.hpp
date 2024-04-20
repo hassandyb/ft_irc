@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/19 17:09:04 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 15:00:56 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ class server
 
 std::vector<std::string> ft_split_with_comma(std::string list);
 void ft_split_with_spaces(std::vector<std::string> & Cmds, std::string Command);
+size_t ft_string_to_size_t(std::string str);
 

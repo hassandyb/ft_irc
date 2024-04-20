@@ -6,11 +6,42 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:30:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/19 14:36:50 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 15:04:42 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
+
+size_t ft_string_to_size_t(std::string str)
+{
+    std::istringstream iss(str);
+    size_t result;
+    iss >> result;
+
+    return result;
+}
+
+std::vector<std::string> ft_split_with_comma(std::string list)
+{
+    std::vector<std::string> Container;
+    
+    std::istringstream iss(list);
+    std::string part;
+    while(std::getline(iss, part, ','))
+    {
+        Container.push_back(part);
+    }
+    return Container;
+}
+
+void ft_split_with_spaces(std::vector<std::string> & Cmds, std::string Command)
+{
+    std::string split;
+    std::istringstream iss(Command);
+    
+    while(iss >> split)
+        Cmds.push_back(split);
+}
 
 bool server::ft_send(int socket, const void * buff, size_t len, int flags)
 {
