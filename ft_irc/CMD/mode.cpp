@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 16:19:47 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 21:09:29 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ bool ft_valid_limit(std::string max)
 
 void server::ft_mode_invite(channel & Channel, client & Client, bool sign)
 {
-    // :a!a MODE #group -l == 
-    // bool server::ft_send(int socket, const void * buff, size_t len, int flags)
     if(sign == true && Channel.getInvitaionStatus() == false)
     {
         Channel.setInvitaionStatus(true);
@@ -101,7 +99,7 @@ void server::ft_mode_limit(channel & Channel, client & Client, bool sign, std::s
     }
     if(sign == true && ft_valid_limit(max) == false) // error 2 : +l require valid limit number
     {
-        std::string msg = ":696 " + Channel.getName() + " +l Invalid mode parameter.";
+        std::string msg = ": 696 " + Channel.getName() + " +l :Invalid mode parameter.\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return;
     }
@@ -110,7 +108,7 @@ void server::ft_mode_limit(channel & Channel, client & Client, bool sign, std::s
     {
         Channel.setLimit(ft_string_to_size_t(max));
         Channel.setLimitStatus(true);
-        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +l " + max;
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +l " + max + "\r\n";
         ft_send_msg_to_all(Channel.getMembers(), msg);
         ft_send_msg_to_all(Channel.getAdmins(), msg); 
         
@@ -118,11 +116,34 @@ void server::ft_mode_limit(channel & Channel, client & Client, bool sign, std::s
     if(sign == false)// case -l
     {
         Channel.setLimitStatus(false);
-        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " -l";
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " -l\r\n";
         ft_send_msg_to_all(Channel.getMembers(), msg);
         ft_send_msg_to_all(Channel.getAdmins(), msg); 
     }
 }
+
+void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std::string target_client)
+{
+   if(target_client.empty() == true)// error 1 : empty target 
+    {
+        std::string msg = ": 696 " + Channel.getName() + " * you must specifiy a parameter for the op mode\r\n";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        return;
+    } 
+    if(ft_find_a_client(target_client) == false)
+    {
+        // std::string msg = ": 401 " + Channel.getName() + " " + target_client + " :No such nick/channel\r\n";
+        // ft_send()
+    }
+
+
+
+   
+}
+
+
+
+
 
 void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket)
 {
@@ -157,7 +178,7 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
          return ;
     }
     std::string Modestr = Cmds[2];
-    size_t j = 3;// args ...
+    size_t j = 3;
     bool sign = true;
     std::string empty;
     
@@ -190,14 +211,14 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
                 ft_mode_limit(Channel, Client, sign, empty);
             j++;  
         }
-        // else if(Modestr.at(i) == 'o')
-        // {
-        //     if(j < Cmds.size())
-        //         ft_mode_operator(Channel, Client, sign, Cmds[j]);
-        //     else
-        //         ft_mode_operator(Channel, Client, sign, empty);
-        //     j++;
-        // }
+        else if(Modestr.at(i) == 'o')
+        {
+            if(j < Cmds.size())
+                ft_mode_operator(Channel, Client, sign, Cmds[j]);
+            else
+                ft_mode_operator(Channel, Client, sign, empty);
+            j++;
+        }
         else
         {
             std::string msg = ": 472 " + Client.getNickname() + " " + Channel.getName() + " " + Modestr.at(i) + " :is unknown mode char to me\r\n";

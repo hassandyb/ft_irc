@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:38:48 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 23:27:20 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:39:23 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socke
     // did not enter the correct password yet ..
     if(Client.getPassStage() == false)
     {
-        std::string msg =  " (451) :You have not registered";
+        std::string msg =  ": 451 :You have not registered !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
@@ -25,7 +25,7 @@ void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socke
     // check 4 paramters ..
     if(Cmds.size() < 5)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) :Not enough parameters";
+        std::string msg = ": 461 " + Client.getNickname() + " " + Cmds[0] + " :Not enough parameters !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
     }
@@ -33,7 +33,7 @@ void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socke
     // changing username after regestration..
     if(Client.getRegestred() == true)
     {
-        std::string msg = Client.getNickname() + "(462) :You may not reregister";
+        std::string msg = ": 462 " + Client.getNickname() + " :You may not reregister !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
     }
@@ -51,8 +51,8 @@ void server::ft_user(std::vector<std::string> & Cmds, client & Client, int Socke
     if((Client.getNickname()).empty() != true)
     {
         Client.setRegestred(true);
-        this->Clients.push_back(Client);
-        std::string msg = Client.getNickname() + " (001) :Welcome to the ft_irc Network";
+        this->Clients.push_back(Client);  
+        std::string msg = ": 001 " + Client.getNickname() + " :Welcome to the ft_irc Network\r\n";
         std::cout << msg << std::endl;
         ft_send(Socket, msg.c_str(), msg.size(), 0);
     }

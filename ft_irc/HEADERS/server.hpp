@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 18:59:54 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:52:06 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ class server
 		void ft_mode_topic(channel & Channel, client & Client, bool sign);
 		void ft_mode_password(channel & Channel, client & Client, bool sign, std::string arg);
 		void ft_mode_limit(channel & Channel, client & Client, bool sign, std::string max);
-
+		void ft_mode_operator(channel & Channel, client & Client, bool sign, std::string target_client);
 		// utilts -----------------
 		
 

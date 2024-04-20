@@ -6,37 +6,16 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 12:54:36 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 15:01:58 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:33:43 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-
-
-// PRIVMSG <target>{,<target>} <text to be sent>
-
-// craete like the join styole
-// a a mian function the a function that 
-// privmsg p1,p2,g1p3, :hi gyus .. 
-
-
-//   :Angel PRIVMSG Wiz :Hello are you receiving this message ?
-//                                   ; Message from Angel to Wiz.
-
-// :b!~b@localhost PRIVMSG #group :hiiiiii
-
-
-
-
-
-
-
-
 void server::ft_priv_msg_client(std::string Recipient_name, client & Client, std::string message)
 {
     client Recipient = ft_get_client(Recipient_name);
-    std::string msg = Client.getNickname() + " PRIVMSG " + Recipient.getNickname() + ":" + message;
+    std::string msg = ":" + Client.getNickname() + " PRIVMSG " + Recipient.getNickname() + ":" + message + "\r\n";
     ft_send(Recipient.getSocket(), msg.c_str(), msg.size(), 0);
 }
 
@@ -47,7 +26,7 @@ void server::ft_priv_msg_channel(std::string Recipient_channel, client & Client,
     // He cant send a message to a channel if he not a member :
     if(Channel.ft_find_client("Members",Client.getNickname()) == false && Channel.ft_find_client("Admins",Client.getNickname()) == false)
     {
-        std::string msg = Client.getNickname() + " " + Recipient_channel + " (404) :Cannot send to channel";
+        std::string msg = ": 404 " + Client.getNickname() + " " + Recipient_channel + " :Cannot send to channel\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;
     }
@@ -74,13 +53,13 @@ void server::ft_privmsg(std::vector<std::string> Cmds, client & Client, int Sock
 {
     if(Cmds.size() == 1)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[0] + " (411) :No recipient given";
+        std::string msg = ": 411 " + Client.getNickname() + " :No recipient given (PRIVMSG)\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
     if(Cmds.size() == 2)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[0] + " (412) :No text to send";
+        std::string msg = ": 412 " + Client.getNickname() + " :No text to send\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;        
     }
@@ -98,7 +77,7 @@ void server::ft_privmsg(std::vector<std::string> Cmds, client & Client, int Sock
         }
         else
         {
-            std::string msg = Client.getNickname() + " (401) :No such nick/channel";
+            std::string msg = ": 401 " + dst[i] + " :No such nick/channel\r\n";
             ft_send(Socket, msg.c_str(), msg.size(), 0);
 
         }
