@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/17 21:23:56 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 19:06:44 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,38 @@ channel & server::ft_find_channel(std::string channel_name)// we use return refe
     }
     return this->Channels[i];
 }
-  
+
+void server::ft_inform_the_rest(channel & Channel, client & Client)
+{
+
+    std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + "@127.0.0.1 JOIN " + Channel.getName() + + "\r\n";
+
+    std::vector<client> Members = Channel.getMembers();
+    
+    for(size_t i = 0; Members.size(); i++)
+    {
+        if(Members[i].getNickname() == Client.getNickname())
+            continue;
+        ft_send(Members[i].getSocket(), msg.c_str(), msg.size(), 0);
+    }
+    
+    std::vector<client> Admins = Channel.getAdmins();
+    
+    for(size_t i = 0; i < Admins.size(); i++)
+    {
+        if(Admins[i].getNickname() == Client.getNickname())
+            continue;
+        ft_send(Admins[i].getSocket(), msg.c_str(), msg.size(), 0);
+    }
+    
+}
+
 void server::ft_try_to_join(std::string channel_name, std::string password, client & Client)
 {
 
     if(channel_name.at(0) != '#' || channel_name.size() == 1)
     {
-        std::string msg = Client.getNickname() + " " + channel_name + " 475 :No such channel";
+        std::string msg = ": 403 " + Client.getNickname() + " " + channel_name + " :No such channel\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;        
     }
@@ -80,7 +105,7 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
     //  error: invite only channel 
     if(Channel.ft_find_client("Invited", Client.getNickname()) == false)
     {
-        std::string msg = Client.getNickname() + " " + channel_name + " :Cannot join channel (+i)";
+        std::string msg = ": 473 " + Client.getNickname() + " " + channel_name + " :Cannot join channel (+i)\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;
     }
@@ -90,7 +115,7 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
     {
         if(password.empty() == true|| Channel.getPassword() != password)
         {
-            std::string msg = Client.getNickname() + " " + channel_name + " (475) :Cannot join channel (+k)";
+            std::string msg = ": 475 " + Client.getNickname() + " " + channel_name + " :Cannot join channel (+K) - bad key\r\n";
             ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
             return ;
         }
@@ -98,25 +123,25 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
     // error : channel channel has limit ...
     if(Channel.getLimitStatus() == true && Channel.ft_channel_size() >= Channel.getLimit())
     {
-        std::string msg = Client.getNickname() + " " + channel_name + " (471) :Cannot join channel (+l)";
+        std::string msg = ": 471 " + Client.getNickname() + " " + channel_name + " :Cannot join channel (+l)\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;
     }
     
     Channel.ft_add_member(Client);
     ft_join_message(channel_name, Client, Channel);
+    ft_inform_the_rest(Channel, Client);
 }
 
 void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)
 {
     if(Cmds.size() == 1)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[0] + " (461) : :Not enough parameters";
+        std::string msg = ": 461 " +  Client.getNickname() + " :Not enough parameters !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
     }
     std::vector<std::string> channels_names = ft_split_with_comma(Cmds[1]);
-
 
 
     std::vector<std::string> passwords;

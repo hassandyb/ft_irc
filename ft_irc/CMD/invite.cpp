@@ -6,28 +6,33 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 17:07:14 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 12:51:30 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:27:16 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-// invite <nickname> <channel>
+
+
 
 void server::ft_invite(std::vector<std::string> Cmds, client & Client, int Socket)
 {
     if(Cmds.size() != 3)
     {
-        std::string msg = Client.getNickname() + " invite (461) :Not enough parameters";
+        
+        std::string msg = ": 461 " + Client.getNickname() + " :Not enough parameters !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
-
-    // client do not exist (not regestred) - channel does not exist ..
-
-    if(ft_find_a_client(Cmds[1]) == false || ft_find_a_channel(Cmds[2]) == false)
+    if(ft_find_a_client(Cmds[1]) == false)
     {
-        std::string msg = Client.getNickname() + " (401) :No such nick/channel";
+        std::string msg = ":localhost 401 " +  Cmds[1] + " :No such nick\r\n";
+        ft_send(Socket, msg.c_str(), msg.size(), 0);
+        return ;
+    }
+    if(ft_find_a_channel(Cmds[2]) == false)
+    {
+        std::string msg = ": 403 " + Cmds[2] + " :No such channel\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
@@ -36,7 +41,7 @@ void server::ft_invite(std::vector<std::string> Cmds, client & Client, int Socke
     channel Channel = ft_get_a_channel(Cmds[2]);
     if(Channel.ft_a_member_or_admin(Client.getNickname()) == false)
     {
-        std::string msg = Client.getNickname() + " " + Cmds[2] + " (442) :You're not on that channel";
+        std::string msg = ": 442 " + Cmds[2] + ":You're not on that channel\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
@@ -45,7 +50,8 @@ void server::ft_invite(std::vector<std::string> Cmds, client & Client, int Socke
     client InvitedClient = ft_get_client(Cmds[1]);
     if(Channel.ft_a_member_or_admin(InvitedClient.getNickname()) == true)
     {
-        std::string msg = Client.getNickname() + " (443) " + InvitedClient.getNickname() + " :is already on channel" + Cmds[2];
+
+        std::string msg = ": 443 " + Client.getNickname() + " " + Cmds[2] + " :is already on channel\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return;
     }
@@ -54,9 +60,13 @@ void server::ft_invite(std::vector<std::string> Cmds, client & Client, int Socke
     // add to invite list... succusful invitation
     Channel.ft_add_invited(InvitedClient);
     
-    std::string msg = Client.getNickname() + " (341) :INVITE " + Cmds[1] + " to join " + Cmds[2];
-    ft_send(Socket, msg.c_str(), msg.size(), 0);
-    ft_send(InvitedClient.getSocket(), msg.c_str(), msg.size(), 0);
+    std::string msg1 = ": 341 " + Client.getNickname() + " " + Cmds[1] + " " + Cmds[2] + " :Inviting " + Cmds[1] + " to " + Cmds[2] + "\r\n";
+    std::string msg2 = ":" + InvitedClient.getNickname() + "!" + InvitedClient.getUsername() + " INVITE " + InvitedClient.getNickname() + " " + Cmds[2] + "\r\n";
+
+
+    
+    ft_send(Socket, msg1.c_str(), msg1.size(), 0);
+    ft_send(InvitedClient.getSocket(), msg2.c_str(), msg2.size(), 0);
 }
 
 

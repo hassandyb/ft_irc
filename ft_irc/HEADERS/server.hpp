@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 16:08:02 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:59:54 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ class server
 		bool ft_channel_exist(std::string channel_name);
 		channel & ft_find_channel(std::string channel_name);
 		void ft_join_message(std::string & channel_name, client & Client, channel & new_channel);
+		void ft_inform_the_rest(channel & Channel, client & Client);
 		void ft_invite(std::vector<std::string> Cmds, client & Client, int Socket);
 		void ft_privmsg(std::vector<std::string> Cmds, client & Client, int Socket);
 		void ft_priv_msg_client(std::string Recipient_name, client & Client, std::string message);
