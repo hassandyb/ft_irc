@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:39:12 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/31 14:17:56 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:14:38 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,18 @@ bool server::ft_nick_already_used(std::string nick)
     return false;
 }
 
-
 void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socket)
 {
     // did not enter the correct password yet ..
     if(Client.getPassStage() == false)
     {
-
-        std::string msg =  Client.getNickname() + " (451) :You have not registered";
+        std::string msg =  ": 451 " + Client.getNickname() + " :You have not registered !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
     if(Cmds.size() == 1)
     {
-        std::string msg = Client.getNickname() + " (431) :No nickname given.";
+        std::string msg = ": 431 " + Client.getNickname() + " :No nickname given !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
@@ -58,19 +56,19 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
     // too many args, first paramter is gigit , emty nickname
     if(Cmds.size() > 2 || std::isdigit(first_char) == true || Cmds[1].empty() == true)// we need a args and the nickname must start witha char , or thet ....
     {
-        std::string msg = Client.getNickname() + " (432) :Erroneus nickname";
+        std::string msg = ": 432 " + Client.getNickname() + " :Erroneus nickname !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;       
     }
     if(ft_nick_already_used(Cmds[1]) == true)
     {
-        std::string msg = Client.getNickname() + " (433) :Nickname is already in use";
+        std::string msg = ": 433 " + Client.getNickname() + " :Nickname is already in use !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;          
     }
     if(Cmds[1].find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos)
     {
-        std::string msg =  Client.getNickname() + " (432) :Erroneus nickname";
+        std::string msg =  ": 432 " + Client.getNickname() + " :Erroneus nickname !\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;       
     }
@@ -79,7 +77,7 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
     // changing the nick name after regestration..
     if(Client.getRegestred() == true)
     {
-        std::string msg = Client.getNickname() + " changed his nickname to " + Cmds[1] + ".";
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " NICK :" + Cmds[1] + "\r\n";
         std::cout << msg << std::endl;
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         Client.setNickname(Cmds[1]);
@@ -93,7 +91,7 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
     {
         Client.setRegestred(true);
         this->Clients.push_back(Client);
-        std::string msg = Client.getNickname() + " (001) :Welcome to the ft_irc Network";
+        std::string msg = ": 001 " + Client.getNickname() + " :Welcome to the ft_irc Network\r\n";
         std::cout << msg << std::endl;
         ft_send(Socket, msg.c_str(), msg.size(), 0);
     }

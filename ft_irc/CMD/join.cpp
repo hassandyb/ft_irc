@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 19:06:44 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:01:25 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ bool server::ft_channel_exist(std::string channel_name)
 
 void server::ft_join_message(std::string & channel_name, client & Client, channel & new_channel)
 {
-        std::string msg1 = ":" + Client.getNickname() + "!" + Client.getNickname() + "@127.0.0.1 JOIN " + channel_name;
-        std::string msg2 = ": 353 " + Client.getNickname() + " @ " + channel_name + " :" + new_channel.ft_list_admins_and_members();
-        std::string msg3 = ": 366 " + Client.getNickname() + " " + channel_name + " :END of /NAMES list";
+        std::string msg1 = ":" + Client.getNickname() + "!" + Client.getUsername() + "@127.0.0.1 JOIN " + channel_name + "\r\n";
+
+        std::string msg2 = ": 353 " + Client.getNickname() + " = " + channel_name + " :" + new_channel.ft_list_admins_and_members() + "\r\n";
+        std::string msg3 = ": 366 " + Client.getNickname() + " " + channel_name + " :End of /NAMES list." + "\r\n";
         
         // send to client 
         ft_send(Client.getSocket(), msg1.c_str(), msg1.size(), 0);
@@ -34,7 +35,7 @@ void server::ft_join_message(std::string & channel_name, client & Client, channe
         ft_send(Client.getSocket(), msg3.c_str(), msg3.size(), 0);
         
         // desplay on the server ...
-        std::cout << std::endl;
+
         std::cout << msg1 << std::endl;
         std::cout << msg2 << std::endl;
         std::cout << msg3 << std::endl;        
@@ -54,7 +55,7 @@ channel & server::ft_find_channel(std::string channel_name)// we use return refe
 void server::ft_inform_the_rest(channel & Channel, client & Client)
 {
 
-    std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + "@127.0.0.1 JOIN " + Channel.getName() + + "\r\n";
+    std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + "@127.0.0.1 JOIN " + Channel.getName() + "\r\n";
 
     std::vector<client> Members = Channel.getMembers();
     
