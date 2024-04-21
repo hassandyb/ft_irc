@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 21:09:29 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/21 11:35:35 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,21 +124,29 @@ void server::ft_mode_limit(channel & Channel, client & Client, bool sign, std::s
 
 void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std::string target_client)
 {
+    if(Channel.ft_find_client("Members", target_client) == true)// case already an operator
+        return ;
+   
    if(target_client.empty() == true)// error 1 : empty target 
     {
         std::string msg = ": 696 " + Channel.getName() + " * you must specifiy a parameter for the op mode\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return;
     } 
-    if(ft_find_a_client(target_client) == false)
+    
+    if(Channel.ft_find_client("Members", target_client) == false)// error 2 : dont exist in members 
     {
-        // std::string msg = ": 401 " + Channel.getName() + " " + target_client + " :No such nick/channel\r\n";
-        // ft_send()
+        std::string msg = ": 401 " + Channel.getName() + " " + target_client + " :No such nick/channel\r\n";
+        ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+        return;
     }
+    
+    
+    client target = Channel.ft_get_client("Members", target_client);
+    // Channel.ft_erase_client("Members", target_client);// erase from members 
+    // Channel.ft_add_Client("Admins", target);    // add it to admins
 
-
-
-   
+     
 }
 
 
