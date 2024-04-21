@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 12:54:36 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 20:33:43 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:30:14 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,5 @@ void server::ft_privmsg(std::vector<std::string> Cmds, client & Client, int Sock
 }
 
 
-
-
-// ft_main 
-// {
-//     chach args they should be 3 
-//     ft_splint chanels and clinet 
-//     if clinet send to clinet 
-//     is channel send to chanel 
-// }
-
-
-// privmsg #channel,client, #chennl, clinet :hi how are you doing to day 
-// so check wiethr you have : when join the message and create it and save it 
-
-
-// remember if you add : the mas should be all this (:hi how are you doing to day ),
-
-// now silt the second arg if you have , and save them ...
-
-// if the second arg contained , it means you are sending the mesage to many channels / clients 
-
-// now send the to function that takes the message and the channel/clinet to send too , and of cours our client trying to send this mesage .
 
 

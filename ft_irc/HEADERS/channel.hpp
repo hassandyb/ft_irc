@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 11:35:55 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:02:40 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ class channel
 		bool ft_find_client(std::string list, std::string Nickname);// list == Members, admins, ...ext  return -1 if do no exist , return indice of it if it exist 
 		client & ft_get_client(std::string list, std::string Nickname);
 		void ft_erase_client(std::string list, std::string Nickname);
-		void ft_add_Client(std::string list , client Client); 
+		void ft_add_client(std::string list , client Client); 
 		
 		std::string ft_list_admins_and_members();
 		bool ft_a_member_or_admin(std::string Nick);

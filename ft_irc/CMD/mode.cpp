@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 13:49:02 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:40:17 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
         return;
     } 
     
-    if(Channel.ft_find_client("Members", target_client) == false)// error 2 : dont exist in members 
+    if(Channel.ft_find_client("Members", target_client) == false && Channel.ft_find_client("Admins", target_client) == false )// error 2 : dont exist in members 
     {
         std::string msg = ": 401 " + Channel.getName() + " " + target_client + " :No such nick/channel\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
@@ -142,12 +142,12 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
     
     if(sign == true)// case +o
     {
-        if(Channel.ft_find_client("Admins", target_client) == true)// case already an operator
+        if(Channel.ft_find_client("Admins", target_client) == true)// case already an operator ...
             return ;
         
         client target = Channel.ft_get_client("Members", target_client);
         Channel.ft_erase_client("Members", target_client);// erase from members 
-        Channel.ft_add_Client("Admins", target);    // add it to admins
+        Channel.ft_add_client("Admins", target);    // add it to admins
 
         std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +o " + target.getNickname() + "\r\n";
 
@@ -156,18 +156,24 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
         ft_send_msg_to_all(Channel.getMembers(), msg);
         
     }
-    
     if(sign == false)//  case -o
     {
-        // if(Channel.ft_find_client())// if it s not operator egnor 
+        if(Channel.ft_find_client("Admins", target_client) == false)// not an operator ...
+            return ;
+        
+        client target = Channel.ft_get_client("Admins", target_client);
+        Channel.ft_erase_client("Admins", target_client);
+        Channel.ft_add_client("Members", target);
+
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " -o " + target.getNickname() + "\r\n";
+        
+        ft_send_msg_to_all(Channel.getAdmins(), msg);
+        ft_send_msg_to_all(Channel.getMembers(), msg);
+        
     }
 
      
 }
-
-
-
-
 
 void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket)
 {

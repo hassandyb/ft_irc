@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 13:08:03 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:49:57 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ std::vector<client > channel::getMembers() {return Members;}
 std::vector<client > channel::getAdmins() {return Admins;}
 std::vector<client > channel::getInvited() {return Invited;}
 
-
 bool channel::ft_find_client(std::string list, std::string Nickname)
 {
 	std::vector<client >  Container;
@@ -106,7 +105,9 @@ client & channel::ft_get_client(std::string list, std::string Nickname)
 				return Invited[i];
 		}
 	}
-	return client();
+	// Default return statement that should not be reached
+	static client defaultClient;
+	return defaultClient;
 }
 
 void channel::ft_erase_client(std::string list, std::string Nickname)
@@ -138,7 +139,7 @@ void channel::ft_erase_client(std::string list, std::string Nickname)
 	
 }
 
-void channel::ft_add_Client(std::string list , client Client)
+void channel::ft_add_client(std::string list , client Client)
 {
 	if(list == "Members")
 		Members.push_back(Client);
@@ -150,9 +151,6 @@ void channel::ft_add_Client(std::string list , client Client)
 		Admins.push_back(Client);
 }
 
-
-
-	
 std::string channel::ft_list_admins_and_members()
 {
 	std::string result;
@@ -170,7 +168,7 @@ std::string channel::ft_list_admins_and_members()
 	return result;
 }
 
-bool channel::ft_a_member_or_admin(std::string Nick)// checks wiether a client is list in the channel admins or members
+bool channel::ft_a_member_or_admin(std::string Nick)
 {
 	for(size_t i = 0; i < Members.size(); i++)
 	{
@@ -196,8 +194,6 @@ size_t channel::ft_channel_size()
 	return i + j;
 }
 
-
-// +itkl
 std::string channel::ft_get_mode()
 {
 	std::string mode;
