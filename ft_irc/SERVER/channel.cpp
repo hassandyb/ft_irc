@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 11:36:32 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/21 13:08:03 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,6 @@ bool channel::ft_find_client(std::string list, std::string Nickname)
 	return false;
 }
 
-
-// std::vector<client > Members;
-// std::vector<client > Admins;
-// std::vector<client > Invited;
-
-
-
 client & channel::ft_get_client(std::string list, std::string Nickname)
 {
 	if(list == "Members")
@@ -126,13 +119,36 @@ void channel::ft_erase_client(std::string list, std::string Nickname)
 				Members.erase(Members.begin() + i);
 		}
 	}
-	// if(list = )
+	if(list == "Admins")
+	{
+		for(size_t i = 0; this->Admins.size(); i++)
+		{
+			if(Admins[i].getNickname() == Nickname)
+				Admins.erase(Admins.begin() + i);
+		}
+	}
+	if(list == "Invited")
+	{
+		for(size_t i = 0; i < Invited.size(); i++)
+		{
+			if(Invited[i].getNickname() == Nickname)
+				Invited.erase(Invited.begin() + i);
+		}
+	}
+	
 }
 
-// void channel::ft_add_Client(std::string list , client Client)
-// {
-	
-// }
+void channel::ft_add_Client(std::string list , client Client)
+{
+	if(list == "Members")
+		Members.push_back(Client);
+
+	if(list == "Admins")
+		Admins.push_back(Client);
+		
+	if(list == "Invited")
+		Admins.push_back(Client);
+}
 
 
 

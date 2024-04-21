@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 11:35:35 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/21 13:49:02 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,7 @@ void server::ft_mode_limit(channel & Channel, client & Client, bool sign, std::s
 
 void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std::string target_client)
 {
-    if(Channel.ft_find_client("Members", target_client) == true)// case already an operator
-        return ;
+    
    
    if(target_client.empty() == true)// error 1 : empty target 
     {
@@ -141,10 +140,27 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
         return;
     }
     
+    if(sign == true)// case +o
+    {
+        if(Channel.ft_find_client("Admins", target_client) == true)// case already an operator
+            return ;
+        
+        client target = Channel.ft_get_client("Members", target_client);
+        Channel.ft_erase_client("Members", target_client);// erase from members 
+        Channel.ft_add_Client("Admins", target);    // add it to admins
+
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +o " + target.getNickname() + "\r\n";
+
+        
+        ft_send_msg_to_all(Channel.getAdmins(), msg);
+        ft_send_msg_to_all(Channel.getMembers(), msg);
+        
+    }
     
-    client target = Channel.ft_get_client("Members", target_client);
-    // Channel.ft_erase_client("Members", target_client);// erase from members 
-    // Channel.ft_add_Client("Admins", target);    // add it to admins
+    if(sign == false)//  case -o
+    {
+        // if(Channel.ft_find_client())// if it s not operator egnor 
+    }
 
      
 }
