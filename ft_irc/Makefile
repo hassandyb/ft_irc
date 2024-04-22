@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 16:07:35 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/04/20 16:02:22 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/04/22 13:23:20 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RM = rm -rf
 
 FLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g3
 
-CMD = $(addprefix CMD/, cmd.cpp pass.cpp nick.cpp user.cpp join.cpp invite.cpp privmsg.cpp mode.cpp utils.cpp )
+CMD = $(addprefix CMD/, cmd.cpp pass.cpp nick.cpp user.cpp join.cpp invite.cpp privmsg.cpp mode.cpp utils.cpp)
 
  SERVER = $(addprefix SERVER/, server.cpp client.cpp channel.cpp)
 

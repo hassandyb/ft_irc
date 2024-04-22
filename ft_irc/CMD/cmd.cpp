@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 16:20:10 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/22 13:39:05 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     
     // else if(Cmds[0] == "TOPIC" || Cmds[0] == "topic")
     //     ft_topic(Cmds, Client, Socket);// enter clinet as reference so you can change it if you want same for all functions ..
+    
     // else if(Cmds[0] == "PART" || Cmds[0] == "part")
     //     ft_part(Cmds, Client, Socket);
     // else if(Cmds[0] == "KICK" || Cmds[0] == "kick")

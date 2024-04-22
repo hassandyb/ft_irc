@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 20:52:06 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/22 14:31:34 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,20 @@ class server
 		void ft_mode_password(channel & Channel, client & Client, bool sign, std::string arg);
 		void ft_mode_limit(channel & Channel, client & Client, bool sign, std::string max);
 		void ft_mode_operator(channel & Channel, client & Client, bool sign, std::string target_client);
+		
+
+
+
+
+		void ft_part(std::vector<std::string> Cmds, client & Client, int Socket);
+		void ft_leave_channel(channel & Channel,client &  Client, std::vector<std::string> & Cmds);
 		// utilts -----------------
 		
 
 
 		bool ft_send(int socket, const void * buff, size_t len, int flags);
 		bool ft_find_a_client(std::string Nick);
+		
 		bool ft_find_a_channel(std::string Channel_name);
 		channel & ft_get_a_channel(std::string Channel_name);
 		client & ft_get_client(std::string nick);
