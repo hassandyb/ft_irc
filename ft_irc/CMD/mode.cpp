@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 16:40:17 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:21:16 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,21 +254,5 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
             std::string msg = ": 472 " + Client.getNickname() + " " + Channel.getName() + " " + Modestr.at(i) + " :is unknown mode char to me\r\n";
             ft_send(Socket, msg.c_str(), msg.size(), 0);
         }
-
-            
-            
-    
     }
-
-
-
-
-    
-
-
-    
-
-    
-
-    
 }
