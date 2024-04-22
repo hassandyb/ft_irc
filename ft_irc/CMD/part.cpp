@@ -6,23 +6,12 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:23:55 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/22 14:32:03 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:16:15 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-        //      ERR_NEEDMOREPARAMS (461)
-        //      ERR_NOSUCHCHANNEL (403)
-        //      ERR_NOTONCHANNEL (442)
-//      :localhost 442 c #gg :You're not on that channel
-//       ":" + hostname + " 403 " + nick + " " + channel + " :No such channel\r\n"
-
-//  void server::ft_invite(std::vector<std::string> Cmds, client & Client, int Socket)
-
-
-//  ":" + hostname + " 461 " + nick + " :Not enough parameters !\r\n"
-//      :localhost 461 c :Not enough parameters
 
 void server::ft_leave_channel(channel & Channel,client &  Client, std::vector<std::string> & Cmds)
 {
@@ -37,9 +26,15 @@ void server::ft_leave_channel(channel & Channel,client &  Client, std::vector<st
         reason = empty;
     }
 
+    std::string msg = ":" + Client.getNickname() + "!~" + Client.getUsername() + "@localhost PART " + Channel.getName() + " " + reason + "\r\n";
     
-        // leave th echannel 
-        // send the essage to all ..
+    ft_send_msg_to_all(Channel.getAdmins(), msg);
+    ft_send_msg_to_all(Channel.getMembers(), msg);
+    
+    if(Channel.ft_find_client("Members", Client.getNickname()) == true)
+        Channel.ft_erase_client("Members", Client.getNickname());
+    if(Channel.ft_find_client("Admins", Client.getNickname()) == true)
+        Channel.ft_erase_client("Admins", Client.getNickname());
 }
 
 void server::ft_part(std::vector<std::string> Cmds, client & Client, int Socket)
@@ -70,8 +65,6 @@ void server::ft_part(std::vector<std::string> Cmds, client & Client, int Socket)
             ft_send(Socket, msg.c_str(), msg.size(), 0);
             continue ;
         }
-        
-
         ft_leave_channel(Channel, Client, Cmds);
     }
 }
