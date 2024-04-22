@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:18:57 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/22 17:04:08 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/22 19:25:52 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,54 @@
 
 //                Numeric Replies:
 //
-//                ERR_NEEDMOREPARAMS (461)     1111
-//                ERR_NOSUCHCHANNEL (403)       11
-//                ERR_CHANOPRIVSNEEDED (482) 1
+//                ERR_NEEDMOREPARAMS (461)     111111
+//                ERR_NOSUCHCHANNEL (403)       11111
+//                ERR_CHANOPRIVSNEEDED (482)    11111
 //                ERR_USERNOTINCHANNEL (441)
 //                ERR_NOTONCHANNEL (442)
 //                Deprecated Numeric Reply:
 //
 //                ERR_BADCHANMASK (476)
 
+//     
+
+
+//      ":" + hostname + " 442 " + channel + " " + ":You're not on that channel\r\n"
+//      ":" + hostname + " 476 " + nick + " " + channelname + " :Invalid channel name." + "\r\n"
+
 
 //      KICK #channel1 user1,user2,user3 :Breaking the rules
 
+void server::ft_kick_users(channel & Channel, client & Client, std::vector<std::string> Cmds)
+{
+    std::vector<std::string> Users = ft_split_with_comma(Cmds[2]);
+    std::string reason ;
+    
+    if(Cmds.size() >= 3)
+        reason = ":" + Cmds[2];
+
+    for(size_t i = 0; i < Users.size(); i++)
+    {
+        if(Channel.ft_a_member_or_admin(Users[i]) == false)// not a member or admin
+        {
+            std::string msg = ": 441 " + Channel.getName() + " " + ":they aren't on that channel\r\n";
+            ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
+            continue;
+        }
+        
+        std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " KICK " + Channel.getName() + " " + Users[i] + " " + reason + "\r\n";
+        
+        ft_send_msg_to_all(Channel.getAdmins(), msg);
+        ft_send_msg_to_all(Channel.getMembers(), msg);
+        
+        // if(Channel.f)
+        // if(Channel.ft_find_client("Members", Users[i]) == true)
+            // erse ....
+        // if(hjkkl)erase
+    }
+
+    
+}
 void server::ft_kick(std::vector<std::string> Cmds, client & Client, int Socket)
 {
     if(Cmds.size() < 3)
@@ -51,11 +87,8 @@ void server::ft_kick(std::vector<std::string> Cmds, client & Client, int Socket)
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;
     }
-    std::vector<std::string> Users = ft_split_with_comma(Cmds[2]);
-
     
-
-    
+    ft_kick_users(Channel, Client, Cmds);
 }
 
 
