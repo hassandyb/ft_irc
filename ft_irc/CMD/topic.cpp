@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:40:52 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 14:50:43 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 16:00:49 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ void server::ft_topic(std::vector<std::string> Cmds, client & Client, int Socket
     }
     if(Cmds.size() == 2)
     {
+        // : 331 a #group :No topic is set
+        if((Channel.getTopic()).empty() == true)
+        {
+            std::string msg = ": 331 " + Client.getNickname() + " " + Channel.getName() + " :No topic is set\r\n";
+            ft_send(Socket, msg.c_str(), msg.size(), 0);
+            return ;
+        }
+        //      ":" + hostname + " 332 " + nick + " " + channel + " :" + topic + "\r\n"
+        //      ":" + hostname + " 333 " + nick + " " + channelName + " " + topicsetter + "!~" + topicsetter + "@" + hostname + " " + time + "\r\n"
+
+        
+        else
+        {
+            std::string msg = ": 332 " + Client.getNickname() + " " + Channel.getName() + " :" + Channel.getTopic() + "\r\n";
+            ft_send(Socket, msg.c_str(), msg.size(), 0);
+            return ;
+        }
+        
         //       : 332 a #group new_topic
         //       : 333 a #group a 1713879553
         
@@ -61,9 +79,9 @@ void server::ft_topic(std::vector<std::string> Cmds, client & Client, int Socket
         // ":" + hostname + " 332 " + nick + " " + channel + " :" + setter + " has set a new topic: " + topic + "\r\n"
         
         
-        // std::string msg1 = ": 332 " + Client.getNickname() + " " + 
-        ft_send(Socket, msg.c_str(), msg.size(), 0);
-        return ;
+        // std::string msg1 = ": 332 " + Client.getNickname() + " " + Chanel.getname() + 
+        // ft_send(Socket, msg.c_str(), msg.size(), 0);
+        // return ;
     }
 
     //      ":" + hostname + " 332 " + nick + " " + channel + " :" + topic + "\r\n"
