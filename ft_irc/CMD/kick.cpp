@@ -6,34 +6,12 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:18:57 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/22 19:25:52 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 11:19:18 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
-
-
-
-//                Numeric Replies:
-//
-//                ERR_NEEDMOREPARAMS (461)     111111
-//                ERR_NOSUCHCHANNEL (403)       11111
-//                ERR_CHANOPRIVSNEEDED (482)    11111
-//                ERR_USERNOTINCHANNEL (441)
-//                ERR_NOTONCHANNEL (442)
-//                Deprecated Numeric Reply:
-//
-//                ERR_BADCHANMASK (476)
-
-//     
-
-
-//      ":" + hostname + " 442 " + channel + " " + ":You're not on that channel\r\n"
-//      ":" + hostname + " 476 " + nick + " " + channelname + " :Invalid channel name." + "\r\n"
-
-
-//      KICK #channel1 user1,user2,user3 :Breaking the rules
 
 void server::ft_kick_users(channel & Channel, client & Client, std::vector<std::string> Cmds)
 {
@@ -57,14 +35,15 @@ void server::ft_kick_users(channel & Channel, client & Client, std::vector<std::
         ft_send_msg_to_all(Channel.getAdmins(), msg);
         ft_send_msg_to_all(Channel.getMembers(), msg);
         
-        // if(Channel.f)
-        // if(Channel.ft_find_client("Members", Users[i]) == true)
-            // erse ....
-        // if(hjkkl)erase
+        if(Channel.ft_find_client("Admins", Users[i]) == true)
+            Channel.ft_erase_client("Admins", Users[i])
+        if(Channel.ft_find_client("Members", Users[i]) == true)
+            Channel.ft_earse_client("Members", Users[i]);
     }
 
     
 }
+
 void server::ft_kick(std::vector<std::string> Cmds, client & Client, int Socket)
 {
     if(Cmds.size() < 3)
