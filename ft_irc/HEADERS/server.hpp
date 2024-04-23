@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 12:11:23 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 13:44:05 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ class server
 		void ft_kick(std::vector<std::string> Cmds, client & Client, int Socket);
 		void ft_kick_users(channel & Channel, client & Client, std::vector<std::string> Cmds);
 		void ft_quit(std::vector<std::string> Cmds, client & Client, int Socket);
+		void ft_topic(std::vector<std::string> Cmds, client & Client, int Socket);
 		// utilts -----------------
 		
 

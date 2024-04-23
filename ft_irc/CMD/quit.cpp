@@ -6,18 +6,11 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:21:07 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 12:23:45 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 13:41:55 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
-
-// when he quites a all the channel memevers he is in recive this ==
-
-//      :b!~b@localhost QUIT Quit
-// the user gets this first quit
-//      :b!~b@localhost QUIT :i have no raeson
-
 
 void server::ft_quit(std::vector<std::string> Cmds, client & Client, int Socket)
 {
@@ -49,9 +42,8 @@ void server::ft_quit(std::vector<std::string> Cmds, client & Client, int Socket)
             ft_send_msg_to_all(Channels[i].getAdmins(),msg);
             ft_send_msg_to_all(Channels[i].getMembers(), msg);
         }
-        
         ft_delete_client(Client);
-        
+        close(Socket);
     }
 }
 
