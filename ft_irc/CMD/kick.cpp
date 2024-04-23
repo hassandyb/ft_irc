@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:18:57 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 11:19:18 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:16:57 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void server::ft_kick_users(channel & Channel, client & Client, std::vector<std::
         ft_send_msg_to_all(Channel.getMembers(), msg);
         
         if(Channel.ft_find_client("Admins", Users[i]) == true)
-            Channel.ft_erase_client("Admins", Users[i])
+            Channel.ft_erase_client("Admins", Users[i]);
         if(Channel.ft_find_client("Members", Users[i]) == true)
-            Channel.ft_earse_client("Members", Users[i]);
+            Channel.ft_erase_client("Members", Users[i]);
     }
 
     

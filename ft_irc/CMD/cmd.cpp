@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/22 16:48:43 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:24:18 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
         ft_part(Cmds, Client, Socket);
     else if(Cmds[0] == "KICK" || Cmds[0] == "kick")
         ft_kick(Cmds, Client, Socket);
-    // else if(Cmds[0] == "QUIT" || Cmds[0] == "quit")
-    //     ft_quit(Cmds, Client, Socket);
+    else if(Cmds[0] == "QUIT" || Cmds[0] == "quit")// find a way to make hin quit on the terminal 
+        ft_quit(Cmds, Client, Socket);
     else
         std::cout << "else condition ..." << std::endl;
 

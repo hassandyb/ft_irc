@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/22 18:11:00 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:11:23 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ class server
 		void ft_leave_channel(channel & Channel,client &  Client, std::vector<std::string> & Cmds);
 		void ft_kick(std::vector<std::string> Cmds, client & Client, int Socket);
 		void ft_kick_users(channel & Channel, client & Client, std::vector<std::string> Cmds);
+		void ft_quit(std::vector<std::string> Cmds, client & Client, int Socket);
 		// utilts -----------------
 		
 
@@ -104,6 +105,7 @@ class server
 		channel & ft_get_a_channel(std::string Channel_name);
 		client & ft_get_client(std::string nick);
 		void ft_send_msg_to_all(std::vector<client> container, std::string msg);
+		void ft_delete_client(client Client);
 		
 		
 };	

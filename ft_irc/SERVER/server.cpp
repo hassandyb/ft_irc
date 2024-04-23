@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:08:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/02 12:44:53 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:16:16 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,3 +83,18 @@ client & server::ft_get_client(std::string nick)
     }
     return Clients[i];
 }
+
+void server::ft_delete_client(client Client)
+{
+    for(size_t i = 0; i < Clients.size(); i++)
+    {
+        if(Clients[i].getNickname() == Client.getNickname())
+        {
+            Clients.erase(Clients.begin() + i);
+            return ;
+        }
+    }
+}
+
+
+
