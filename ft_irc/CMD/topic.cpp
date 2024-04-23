@@ -6,22 +6,11 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:40:52 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 16:00:49 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:17:49 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
-
-
-//          ERR_NEEDMOREPARAMS (461) ----
-//          ERR_NOSUCHCHANNEL (403) ---
-//          ERR_NOTONCHANNEL (442) ---
-//          ERR_CHANOPRIVSNEEDED (482) ---
-//          RPL_NOTOPIC (331) ---
-//          RPL_TOPIC (332)
-//          RPL_TOPICWHOTIME (333)
-
-//      TOPIC <channel> [<new_topic>]
 
 
 void server::ft_topic(std::vector<std::string> Cmds, client & Client, int Socket)
@@ -61,34 +50,27 @@ void server::ft_topic(std::vector<std::string> Cmds, client & Client, int Socket
             ft_send(Socket, msg.c_str(), msg.size(), 0);
             return ;
         }
-        //      ":" + hostname + " 332 " + nick + " " + channel + " :" + topic + "\r\n"
-        //      ":" + hostname + " 333 " + nick + " " + channelName + " " + topicsetter + "!~" + topicsetter + "@" + hostname + " " + time + "\r\n"
 
-        
         else
         {
-            std::string msg = ": 332 " + Client.getNickname() + " " + Channel.getName() + " :" + Channel.getTopic() + "\r\n";
-            ft_send(Socket, msg.c_str(), msg.size(), 0);
+            std::string msg1 = ": 332 " + Client.getNickname() + " " + Channel.getName() + " :" + Channel.getTopic() + "\r\n";
+            std::string msg2 = ": 333" + Client.getNickname() + " " + Channel.getName() + " " + Client.getNickname() + " " + Channel.ft_get_topic_time() + "\r\n";
+            ft_send(Socket, msg1.c_str(), msg1.size(), 0);
+            ft_send(Socket, msg2.c_str(), msg2.size(), 0);
             return ;
         }
         
-        //       : 332 a #group new_topic
-        //       : 333 a #group a 1713879553
-        
-        // ":" + hostname + " 332 " + nick + " " + channel + " :" + topic + "\r\n"
-        // ":" + hostname + " 332 " + nick + " " + channel + " :" + setter + " has set a new topic: " + topic + "\r\n"
-        
-        
-        // std::string msg1 = ": 332 " + Client.getNickname() + " " + Chanel.getname() + 
-        // ft_send(Socket, msg.c_str(), msg.size(), 0);
-        // return ;
-    }
+        if((Channel.getTopic()).empty() == true)
+        {
+            Channel.ft_save_topic_time();
+        }
 
-    //      ":" + hostname + " 332 " + nick + " " + channel + " :" + topic + "\r\n"
-    //      ":" + hostname + " 332 " + nick + " " + channel + " :" + setter + " has set a new topic: " + topic + "\r\n"
-    //      ":" + hostname + " 333 " + nick + " " + channelName + " " + topicsetter + "!~" + topicsetter + "@" + hostname + " " + time + "\r\n"
+    }
+    Channel.setTopic(Cmds[2]);
+    std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " TOPIC " + Channel.getName() + " " + Channel.getTopic() + "\r\n";
     
-    //      :a!a@localhost TOPIC #group new_topic
+    ft_send_msg_to_all(Channel.getAdmins(), msg);
+    ft_send_msg_to_all(Channel.getMembers(), msg);
 }   
 
 

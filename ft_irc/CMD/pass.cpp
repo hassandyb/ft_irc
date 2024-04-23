@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:17:15 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 20:19:56 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:23:43 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,5 @@ void server::ft_pass(std::vector<std::string> & Cmds, client & Client, int Socke
 
     Client.setPassStage(true);
 
-
-
-        
-           
-     
 }
 

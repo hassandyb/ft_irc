@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 15:02:40 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 17:53:37 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ class channel
 		std::vector<client > Invited;
 
 		time_t Creationtime;
+		time_t Topictime;
 			
 	public :
 		channel();
@@ -89,6 +90,7 @@ class channel
 		
 		void ft_save_creation_time();
 		std::string ft_get_creation_time();
-		
+		void ft_save_topic_time();
+		std::string ft_get_topic_time();
 		
 };
