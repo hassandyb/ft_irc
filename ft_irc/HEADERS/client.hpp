@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/06 17:54:03 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/24 11:47:50 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ class client
 		bool Regestred;//after the pass word is correct clinet must enter nick and user to pass this satge 
 		
 		std::string Realname;
+
+		
+		// remove later &&&&&&&&&&&&&&&&&&&&&&&&
+		 int Fd; //-> client file descriptor
+ 		std::string IPadd; //-> client ip address
+ 
 	public :
 		client();
 		
@@ -48,5 +54,8 @@ class client
 		bool getRegestred();
 		std::string getRealname();
 
-
+		// remove later &&&&&&&&&&&&&&&&&&&&&&&&
+		int GetFd(){return Fd;} //-> getter for fd
+ 		void SetFd(int fd){Fd = fd;} //-> setter for fd
+ 		void setIpAdd(std::string ipadd){IPadd = ipadd;} //-> setter for ipadd
 };

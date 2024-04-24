@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 17:53:37 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:40:40 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,10 @@ class channel
 		std::string ft_get_creation_time();
 		void ft_save_topic_time();
 		std::string ft_get_topic_time();
+
+
+
+		// only for testing ....
+		void SerSocket();
 		
 };

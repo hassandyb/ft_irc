@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 16:18:34 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/24 14:48:21 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,26 @@ int main (int ac, char **av)
 	try
 	{
 		server s(av[1], av[2]);
-		// a function that buildes a server ... 
+		s.SerSocket();
 
-		client c;// start modifing , just for testing ...
+		// client c;// start modifing , just for testing ...
 		while(server::ReceivedSignal == false)
 		{
-			// the poll function should be heree 
-			std::string command;
-			std::cout << "Command : ";
-			getline(std::cin, command);
+			if((poll(&s.getFds()[0], s.getFds().size(), -1) == -1) && server::ReceivedSignal == false)
+				throw(std::runtime_error("poll() faild"));
 
-
-
-
-			s.ft_execute_command(command, c, 1);
-			
+			for(size_t i = 0; i < s.getFds().size(); i++)
+			{
+				if (s.getFds()[i].revents & POLLIN)
+				{
+					s.AcceptNewClient();
+				}
+				else
+					s.ReceiveNewData(s.getFds()[i].fd);
+			}
 		}
 		
-		// ft_close_sockets(); a fuction that closes sochets once a signal is recieved ...
+		s.CloseFds();
 	}
 	
 	catch(const std::exception & e)

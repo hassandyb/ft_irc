@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 13:44:05 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/24 14:45:50 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,26 @@
 #include <ctime>
 
 
+//remove later &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+#include <iostream>
+#include <vector> //-> for vector
+#include <sys/socket.h> //-> for socket()
+#include <sys/types.h> //-> for socket()
+#include <netinet/in.h> //-> for sockaddr_in
+#include <fcntl.h> //-> for fcntl()
+#include <unistd.h> //-> for close()
+#include <arpa/inet.h> //-> for inet_ntoa()
+#include <poll.h> //-> for poll()
+#include <csignal> //-> for signal()
+//-------------------------------------------------------//
+#define RED "\e[1;31m" //-> for red color
+#define WHI "\e[0;37m" //-> for white color
+#define GRE "\e[1;32m" //-> for green color
+#define YEL "\e[1;33m" //-> for yellow color
+
+
+
 
 class server
 {
@@ -37,6 +57,15 @@ class server
 		
 		std::vector<client> Clients;
 		std::vector<channel> Channels;
+
+		// remove later &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+		
+ 		int SerSocketFd; //-> server socket file descriptor
+ 		static bool Signal; //-> static boolean for signal
+ 		std::vector<client> clients; //-> vector of clients
+ 		std::vector<struct pollfd> fds; //-> vector of pollfd
+		
 	public :
 		//parametrized constructor ...
 		server(char * port, char * Password);
@@ -107,11 +136,24 @@ class server
 		client & ft_get_client(std::string nick);
 		void ft_send_msg_to_all(std::vector<client> container, std::string msg);
 		void ft_delete_client(client Client);
+
+		// remove later &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+		void SerSocket();//-> server socket creation
+		 std::vector<struct pollfd>& getFds()  {return fds;}
 		
-		
+ 		void ServerInit(); //-> server initialization
+ 		
+ 		void AcceptNewClient(); //-> accept new client
+ 		void ReceiveNewData(int fd); //-> receive new data from a registered client
+ 		
+ 		void CloseFds(); //-> close file descriptors
+ 		void ClearClients(int fd); //-> clear clients
 };	
 
 
 std::vector<std::string> ft_split_with_comma(std::string list);
 void ft_split_with_spaces(std::vector<std::string> & Cmds, std::string Command);
 size_t ft_string_to_size_t(std::string str);
+
+
+
