@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/26 16:47:44 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:29:54 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,11 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
         if(Channel.ft_find_client("Admins", target_client) == true)// case already an operator ...
             return ;
         
-        client & target = Channel.ft_get_client("Members", target_client);
-        Channel.ft_erase_client("Members", target_client);// erase from members 
+        client target = Channel.ft_get_client("Members", target_client);
         Channel.ft_add_client("Admins", target);    // add it to admins
+        Channel.ft_erase_client("Members", target_client);// erase from members 
 
+        
         std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " +o " + target.getNickname() + "\r\n";
 
         
@@ -162,8 +163,9 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
             return ;
         
         client & target = Channel.ft_get_client("Admins", target_client);
-        Channel.ft_erase_client("Admins", target_client);
         Channel.ft_add_client("Members", target);
+        Channel.ft_erase_client("Admins", target_client);
+        
 
         std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + " MODE " + Channel.getName() + " -o " + target.getNickname() + "\r\n";
         

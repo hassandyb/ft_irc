@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/26 16:22:09 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:21:46 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void channel::ft_erase_client(std::string list, std::string Nickname)
 	
 }
 
-void channel::ft_add_client(std::string list , client Client)
+void channel::ft_add_client(std::string list , client & Client)
 {
 	if(list == "Members")
 		Members.push_back(Client);
