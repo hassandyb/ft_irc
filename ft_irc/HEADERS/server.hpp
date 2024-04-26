@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/25 19:59:09 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 17:01:21 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ class server
 		void ft_send_msg_to_all(std::vector<client> container, std::string msg);
 		void ft_delete_client(int sock);
 		void ft_delete_client(client Client);
+		void ft_delete_channel(std::string Channel_name);
 
 		// remove later &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 		void SerSocket();//-> server socket creation

@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:08:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/24 20:27:10 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 17:04:04 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,18 @@ void server::ft_delete_client(int sock)
         }
     }
 }
+
+void server::ft_delete_channel(std::string Channel_name)
+{
+    for(size_t i = 0; i < Channels.size(); i++)
+    {
+        if(Channels[i].getName() == Channel_name)
+            Channels.erase(Channels.begin() + i);
+    }
+}
+
+
+
 // remove later --------------------------------------------------------------------------------------------------
 
 

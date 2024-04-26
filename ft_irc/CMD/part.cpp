@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:23:55 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/25 20:02:11 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 17:02:17 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void server::ft_leave_channel(channel & Channel,client &  Client, std::vector<st
         Channel.ft_erase_client("Members", Client.getNickname());
     if(Channel.ft_find_client("Admins", Client.getNickname()) == true)
         Channel.ft_erase_client("Admins", Client.getNickname());
+    
+    if(Channel.getAdmins().empty() == true && Channel.getMembers().empty() == true)
+        ft_delete_channel(Channel.getName());
 }
 
 void server::ft_part(std::vector<std::string> Cmds, client & Client, int Socket)
