@@ -6,11 +6,17 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:13:32 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/24 14:48:21 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:30:14 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HEADERS/server.hpp"
+
+
+// __________________
+
+//	mode #group +p/u/l htjb
+
 
 
 bool ft_valid_args(int & ac, char **av)
@@ -78,17 +84,26 @@ int main (int ac, char **av)
 		// client c;// start modifing , just for testing ...
 		while(server::ReceivedSignal == false)
 		{
-			if((poll(&s.getFds()[0], s.getFds().size(), -1) == -1) && server::ReceivedSignal == false)
+			// std::cout << "kkk ..." << std::endl;
+			if((poll(s.getFds().data(), s.getFds().size(), -1) == -1) && server::ReceivedSignal == false)
 				throw(std::runtime_error("poll() faild"));
-
+			// std::cout << "here ..." << std::endl;
 			for(size_t i = 0; i < s.getFds().size(); i++)
 			{
-				if (s.getFds()[i].revents & POLLIN)
+				// for the server socket i = 0 (fd = 3) , to accept and create new clients only no reading no writing
+				if (i == 0 && s.getFds()[i].revents & POLLIN)
 				{
 					s.AcceptNewClient();
+					continue; // skip bcoz no reading or wriding should be done here
 				}
-				else
+				if (s.getFds()[i].revents & POLLIN)
 					s.ReceiveNewData(s.getFds()[i].fd);
+				if (s.getFds()[i].revents & POLLHUP)
+				{
+					std::cout <<"disconnected" << std::endl;
+					s.ClearClients(s.getFds()[i].fd);  // deled from the clients
+					i--;
+				}
 			}
 		}
 		

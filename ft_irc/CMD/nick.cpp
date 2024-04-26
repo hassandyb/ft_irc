@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:39:12 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 20:14:38 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/24 20:20:41 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void server::ft_nick(std::vector<std::string> & Cmds, client & Client, int Socke
     if((Client.getUsername()).empty() != true)
     {
         Client.setRegestred(true);
-        this->Clients.push_back(Client);
+        // this->Clients.push_back(Client);
         std::string msg = ": 001 " + Client.getNickname() + " :Welcome to the ft_irc Network\r\n";
         std::cout << msg << std::endl;
         ft_send(Socket, msg.c_str(), msg.size(), 0);

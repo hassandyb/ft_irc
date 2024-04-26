@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:43 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 18:40:40 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:22:04 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,16 @@ class channel
 
 		time_t Creationtime;
 		time_t Topictime;
+		time_t Logtime;
 			
 	public :
 		channel();
+		channel(channel const & other);
+		channel & operator=(channel const & other);
+		~channel();
 		void ft_channel_init();
+
+		
 		
 		// Getters / Setters ------------------
 		void setName(std::string Name);
@@ -73,15 +79,15 @@ class channel
 		void ft_add_admin(client & Client);
 		void ft_add_invited(client & Client);
 		
-		std::vector<client > getMembers();
-		std::vector<client > getAdmins();
-		std::vector<client > getInvited();
+		std::vector<client > & getMembers();
+		std::vector<client > & getAdmins();
+		std::vector<client > & getInvited();
 
 		
 		bool ft_find_client(std::string list, std::string Nickname);// list == Members, admins, ...ext  return -1 if do no exist , return indice of it if it exist 
 		client & ft_get_client(std::string list, std::string Nickname);
 		void ft_erase_client(std::string list, std::string Nickname);
-		void ft_add_client(std::string list , client Client); 
+		void ft_add_client(std::string list , client Client);
 		
 		std::string ft_list_admins_and_members();
 		bool ft_a_member_or_admin(std::string Nick);

@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 12:54:36 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/21 15:30:14 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/25 20:20:57 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void server::ft_priv_msg_client(std::string Recipient_name, client & Client, std::string message)
 {
-    client Recipient = ft_get_client(Recipient_name);
+    client & Recipient = ft_get_client(Recipient_name);
     std::string msg = ":" + Client.getNickname() + " PRIVMSG " + Recipient.getNickname() + ":" + message + "\r\n";
     ft_send(Recipient.getSocket(), msg.c_str(), msg.size(), 0);
 }
 
 void server::ft_priv_msg_channel(std::string Recipient_channel, client & Client, std::string message)
 {
-    channel Channel = ft_get_a_channel(Recipient_channel);
+    channel & Channel = ft_get_a_channel(Recipient_channel);
 
     // He cant send a message to a channel if he not a member :
     if(Channel.ft_find_client("Members",Client.getNickname()) == false && Channel.ft_find_client("Admins",Client.getNickname()) == false)

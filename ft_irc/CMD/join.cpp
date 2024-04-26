@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 20:01:25 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:05:11 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,8 @@ void server::ft_join_message(std::string & channel_name, client & Client, channe
         
         // desplay on the server ...
 
-        std::cout << msg1 << std::endl;
-        std::cout << msg2 << std::endl;
-        std::cout << msg3 << std::endl;        
-}
-
-channel & server::ft_find_channel(std::string channel_name)// we use return reference because we need to ake actuall changes to out channel
-{
-    size_t i;
-    for( i = 0; i < Channels.size(); i++)
-    {
-        if(channel_name == this->Channels[i].getName())
-            return this->Channels[i];
-    }
-    return this->Channels[i];
+        std::cout << msg1 << msg2 << msg3;
+       
 }
 
 void server::ft_inform_the_rest(channel & Channel, client & Client)
@@ -58,8 +46,7 @@ void server::ft_inform_the_rest(channel & Channel, client & Client)
     std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + "@127.0.0.1 JOIN " + Channel.getName() + "\r\n";
 
     std::vector<client> Members = Channel.getMembers();
-    
-    for(size_t i = 0; Members.size(); i++)
+    for(size_t i = 0; i < Members.size(); i++)
     {
         if(Members[i].getNickname() == Client.getNickname())
             continue;
@@ -79,7 +66,6 @@ void server::ft_inform_the_rest(channel & Channel, client & Client)
 
 void server::ft_try_to_join(std::string channel_name, std::string password, client & Client)
 {
-
     if(channel_name.at(0) != '#' || channel_name.size() == 1)
     {
         std::string msg = ": 403 " + Client.getNickname() + " " + channel_name + " :No such channel\r\n";
@@ -101,10 +87,10 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
     
     // case 2 : channel already exist in the server
 
-    channel Channel = ft_find_channel(channel_name);
+    channel & Channel = ft_get_a_channel(channel_name);
 
     //  error: invite only channel 
-    if(Channel.ft_find_client("Invited", Client.getNickname()) == false)
+    if(Channel.ft_find_client("Invited", Client.getNickname()) == true)
     {
         std::string msg = ": 473 " + Client.getNickname() + " " + channel_name + " :Cannot join channel (+i)\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
@@ -129,9 +115,14 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
         return ;
     }
     
-    Channel.ft_add_member(Client);
-    ft_join_message(channel_name, Client, Channel);
-    ft_inform_the_rest(Channel, Client);
+    if(Channel.ft_a_member_or_admin(Client.getNickname()) == false)
+    {
+        Channel.ft_add_member(Client);
+
+        ft_join_message(channel_name, Client, Channel);
+        ft_inform_the_rest(Channel, Client);
+    }
+
 }
 
 void server::ft_join(std::vector<std::string> Cmds, client & Client, int Socket)

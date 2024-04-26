@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:46:11 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 18:25:17 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:21:06 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
     if(Cmds.size() == 0)
         return; 
     // Password stage and autotication satge 
-    
+    if (Cmds[0] == "list")
+            ft_print_data();
     if(Cmds[0] == "PASS" || Cmds[0] == "pass")
     {
         ft_pass(Cmds, Client, Socket);
@@ -98,9 +99,11 @@ void server::ft_execute_command(std::string Command, client & Client, int Socket
         ft_quit(Cmds, Client, Socket);
     else
     {
+        
         std::string msg = ": 421 " + Client.getNickname() + " " + Cmds[0] + " :Unknown command\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);
     }
+    
 }
 
 

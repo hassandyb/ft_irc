@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:23:55 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/22 15:16:15 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/25 20:02:11 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void server::ft_part(std::vector<std::string> Cmds, client & Client, int Socket)
             ft_send(Socket, msg.c_str(), msg.size(), 0);
             continue ;
         }
-        channel Channel = ft_get_a_channel(ChannelNames[i]);
+        channel & Channel = ft_get_a_channel(ChannelNames[i]);
 
         if(Channel.ft_a_member_or_admin(Client.getNickname()) == false)
         {

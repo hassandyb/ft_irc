@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 17:53:03 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:22:09 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,40 @@ channel::channel()
 	this->ft_channel_init();
 }
 
+
+channel::channel(channel const & other)
+{
+	*this = other;
+}
+channel & channel::operator=(channel const & other)
+{
+	if(this != &other)
+	{
+		this->Name = other.Name;
+		this->Topic = other.Topic;
+		this->Password = other.Password;
+		this->Limit = other.Limit;
+
+		this->PassWordStatus = other.PassWordStatus;
+		this->InvitaionStatus = other.InvitaionStatus;
+        this->TopicStatus = other.TopicStatus;
+        this->AdminStatus = other.AdminStatus;
+        this->LimitStatus = other.LimitStatus;
+        
+        this->Members = other.Members;
+        this->Admins = other.Admins;
+        this->Invited = other.Invited;
+        
+        this->Creationtime = other.Creationtime;
+        this->Topictime = other.Topictime;
+        this->Logtime = other.Logtime;
+	}
+	return *this;
+}
+channel::~channel() {};
+
+
+		
 void channel::ft_channel_init()
 {
 		this->InvitaionStatus = false;
@@ -57,9 +91,9 @@ void channel::ft_add_member(client & Client) {this->Members.push_back(Client);}
 void channel::ft_add_admin(client & Client) {this->Admins.push_back(Client);}
 void channel::ft_add_invited(client & Client) {this->Invited.push_back(Client);}
 
-std::vector<client > channel::getMembers() {return Members;}
-std::vector<client > channel::getAdmins() {return Admins;}
-std::vector<client > channel::getInvited() {return Invited;}
+std::vector<client > & channel::getMembers() {return Members;}
+std::vector<client > & channel::getAdmins() {return Admins;}
+std::vector<client > & channel::getInvited() {return Invited;}
 
 bool channel::ft_find_client(std::string list, std::string Nickname)
 {
@@ -148,7 +182,7 @@ void channel::ft_add_client(std::string list , client Client)
 		Admins.push_back(Client);
 		
 	if(list == "Invited")
-		Admins.push_back(Client);
+		Invited.push_back(Client);
 }
 
 std::string channel::ft_list_admins_and_members()

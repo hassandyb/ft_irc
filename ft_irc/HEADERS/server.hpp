@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/24 14:45:50 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/25 19:59:09 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ class server
 		
  		int SerSocketFd; //-> server socket file descriptor
  		static bool Signal; //-> static boolean for signal
- 		std::vector<client> clients; //-> vector of clients
+ 		
  		std::vector<struct pollfd> fds; //-> vector of pollfd
 		
 	public :
@@ -77,6 +77,7 @@ class server
 		void setSocket(int Socket);
 		void setPort(int Port);
 		void setPassword(std::string Password);
+		
 
 		// Getters ---------------------
 		int getSocket();
@@ -100,7 +101,6 @@ class server
 		void ft_try_to_join(std::string channel_name, std::string password, client & Client);
 		void ft_join(std::vector<std::string> Cmds, client & Client, int Socket);
 		bool ft_channel_exist(std::string channel_name);
-		channel & ft_find_channel(std::string channel_name);
 		void ft_join_message(std::string & channel_name, client & Client, channel & new_channel);
 		void ft_inform_the_rest(channel & Channel, client & Client);
 		void ft_invite(std::vector<std::string> Cmds, client & Client, int Socket);
@@ -135,6 +135,7 @@ class server
 		channel & ft_get_a_channel(std::string Channel_name);
 		client & ft_get_client(std::string nick);
 		void ft_send_msg_to_all(std::vector<client> container, std::string msg);
+		void ft_delete_client(int sock);
 		void ft_delete_client(client Client);
 
 		// remove later &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -148,6 +149,49 @@ class server
  		
  		void CloseFds(); //-> close file descriptors
  		void ClearClients(int fd); //-> clear clients
+		client & ft_get_client_fd(int fd);
+
+		// int Socket;
+		// int Port;
+		// std::string Password;
+		// std::vector<client> Clients;
+		// std::vector<channel> Channels;
+
+		
+		void ft_print_data()
+		{
+			std::cout << ":server data : --------------" << std::endl;
+			std::cout << "Clients : ";
+			for(size_t i = 0; i < Clients.size(); i++)
+			{
+				std::cout << Clients[i].getNickname() << " ";
+			}
+			std::cout << std::endl;
+			for(size_t i = 0; i < Channels.size() ; i++)
+			{
+				std::cout << "Channel " << Channels[i].getName() << "  ";
+				std::cout << "M : ";
+				std::vector<client> Members = Channels[i].getMembers();
+				for(size_t i = 0; i < Members.size(); i++)
+				{
+					std::cout << Members[i].getNickname() << " ";
+				}
+				std::cout << "A : ";
+				std::vector<client> Admins = Channels[i].getAdmins();
+				for(size_t i = 0; i < Admins.size(); i++)
+				{
+					std::cout << Admins[i].getNickname() << " ";
+				}
+				std::cout << "I : ";
+				std::vector<client> Invited = Channels[i].getInvited();
+				for(size_t i = 0; i < Invited.size(); i++)
+				{
+					std::cout << Invited[i].getNickname() << " ";
+				}
+				std::cout << " ---- " << std::endl;
+			}
+		}
+		
 };	
 
 

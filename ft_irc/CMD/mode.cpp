@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/22 15:21:16 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:47:44 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
         if(Channel.ft_find_client("Admins", target_client) == true)// case already an operator ...
             return ;
         
-        client target = Channel.ft_get_client("Members", target_client);
+        client & target = Channel.ft_get_client("Members", target_client);
         Channel.ft_erase_client("Members", target_client);// erase from members 
         Channel.ft_add_client("Admins", target);    // add it to admins
 
@@ -161,7 +161,7 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
         if(Channel.ft_find_client("Admins", target_client) == false)// not an operator ...
             return ;
         
-        client target = Channel.ft_get_client("Admins", target_client);
+        client & target = Channel.ft_get_client("Admins", target_client);
         Channel.ft_erase_client("Admins", target_client);
         Channel.ft_add_client("Members", target);
 
@@ -191,7 +191,7 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
-   channel Channel = ft_get_a_channel(Cmds[1]);
+   channel & Channel = ft_get_a_channel(Cmds[1]);
     std::string Client_name = Client.getNickname();
     if(Cmds.size() == 2 && (Channel.ft_find_client("Members", Client_name) == false || Channel.ft_find_client("Admins", Client_name) == false))
     {
@@ -212,7 +212,7 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
     bool sign = true;
     std::string empty;
     
-    for(size_t i = 0; Modestr.size(); i++)
+    for(size_t i = 0; i < Modestr.size(); i++)
     {
         if(Modestr.at(i) == '+')
             sign = true;
@@ -251,6 +251,7 @@ void server::ft_mode(std::vector<std::string>  Cmds, client & Client, int Socket
         }
         else
         {
+            continue;
             std::string msg = ": 472 " + Client.getNickname() + " " + Channel.getName() + " " + Modestr.at(i) + " :is unknown mode char to me\r\n";
             ft_send(Socket, msg.c_str(), msg.size(), 0);
         }

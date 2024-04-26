@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 17:07:14 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/20 18:27:16 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/25 20:19:36 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void server::ft_invite(std::vector<std::string> Cmds, client & Client, int Socke
     }
 
     // Client exscuting this comand not an member/admine on this channel 
-    channel Channel = ft_get_a_channel(Cmds[2]);
+    channel & Channel = ft_get_a_channel(Cmds[2]);
     if(Channel.ft_a_member_or_admin(Client.getNickname()) == false)
     {
         std::string msg = ": 442 " + Cmds[2] + ":You're not on that channel\r\n";
@@ -47,7 +47,7 @@ void server::ft_invite(std::vector<std::string> Cmds, client & Client, int Socke
     }
     
     // the client been invited is already a memeber/admin ...
-    client InvitedClient = ft_get_client(Cmds[1]);
+    client & InvitedClient = ft_get_client(Cmds[1]);
     if(Channel.ft_a_member_or_admin(InvitedClient.getNickname()) == true)
     {
 

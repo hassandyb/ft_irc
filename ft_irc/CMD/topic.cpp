@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:40:52 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 18:17:49 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/25 20:02:40 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void server::ft_topic(std::vector<std::string> Cmds, client & Client, int Socket
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
-    channel Channel = ft_get_a_channel(Client.getNickname());    
+    channel & Channel = ft_get_a_channel(Client.getNickname());    
     if(Channel.ft_a_member_or_admin(Client.getNickname()) == false)
     {
         std::string msg = ": 442 " + Channel.getName() + " :You're not on that channel\r\n";

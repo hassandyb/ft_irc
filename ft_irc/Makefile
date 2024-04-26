@@ -6,7 +6,7 @@
 #    By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 16:07:35 by hed-dyb           #+#    #+#              #
-#    Updated: 2024/04/23 18:23:07 by hed-dyb          ###   ########.fr        #
+#    Updated: 2024/04/24 19:52:14 by hed-dyb          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC = c++
 
 RM = rm -rf 
 
-FLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
 
 CMD = $(addprefix CMD/, cmd.cpp pass.cpp nick.cpp user.cpp join.cpp invite.cpp privmsg.cpp mode.cpp utils.cpp part.cpp kick.cpp quit.cpp topic.cpp)
 

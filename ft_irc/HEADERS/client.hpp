@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/24 11:47:50 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/24 20:25:59 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,17 @@ class client
 
 		
 		// remove later &&&&&&&&&&&&&&&&&&&&&&&&
-		 int Fd; //-> client file descriptor
+		//  int Fd; //-> client file descriptor
  		std::string IPadd; //-> client ip address
+		std::string buffer;
  
 	public :
 		client();
+		client(client const & other);
+		client & operator=(client const & other);// update later
+		~client();
+
+
 		
 		//Setters : ----------------
 		void setSocket(int Socket);
@@ -55,7 +61,11 @@ class client
 		std::string getRealname();
 
 		// remove later &&&&&&&&&&&&&&&&&&&&&&&&
-		int GetFd(){return Fd;} //-> getter for fd
- 		void SetFd(int fd){Fd = fd;} //-> setter for fd
+		int GetFd(){return Socket;} //-> getter for fd
+ 		void SetFd(int fd){Socket = fd;} //-> setter for fd
  		void setIpAdd(std::string ipadd){IPadd = ipadd;} //-> setter for ipadd
+		void setBuffer(std::string recived){buffer += recived;}
+		std::string getBuffer(){return buffer;}
+		void	clearBuffer(){buffer.clear();};
+		
 };

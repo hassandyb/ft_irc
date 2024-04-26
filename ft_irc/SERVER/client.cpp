@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:05:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/03/30 09:19:00 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/25 15:09:08 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,25 @@ client::client()
     this->PassStage = false;
 	this->Regestred = false;
 }
-
+client::client(client const & other)
+{
+    *this = other;
+}
+client & client::operator=(client const & other)
+{
+    this->Socket = other.Socket;
+    this->Nickname = other.Nickname;
+    this->Username = other.Username;
+    this->PassStage = other.PassStage;
+    this->Regestred = other.Regestred;
+    this->Realname = other.Realname;
+    // delete
+    this->IPadd = other.IPadd;
+    this->buffer = other.buffer;
+    
+    return *this;
+}
+client::~client() {};
 
 // Getters / Setters : --------------------------------
 
