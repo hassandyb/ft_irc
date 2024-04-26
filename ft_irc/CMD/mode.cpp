@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:19:45 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/26 18:29:54 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:35:58 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void server::ft_mode_operator(channel & Channel, client & Client, bool sign, std
         if(Channel.ft_find_client("Admins", target_client) == false)// not an operator ...
             return ;
         
-        client & target = Channel.ft_get_client("Admins", target_client);
+        client target = Channel.ft_get_client("Admins", target_client);
         Channel.ft_add_client("Members", target);
         Channel.ft_erase_client("Admins", target_client);
         

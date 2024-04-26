@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 13:21:03 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/26 18:21:46 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:49:36 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void channel::ft_erase_client(std::string list, std::string Nickname)
 	}
 	if(list == "Admins")
 	{
-		for(size_t i = 0; this->Admins.size(); i++)
+		for(size_t i = 0; i < this->Admins.size(); i++)
 		{
 			if(Admins[i].getNickname() == Nickname)
 				Admins.erase(Admins.begin() + i);
