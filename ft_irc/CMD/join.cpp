@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/26 16:05:11 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 11:50:19 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
     channel & Channel = ft_get_a_channel(channel_name);
 
     //  error: invite only channel 
-    if(Channel.ft_find_client("Invited", Client.getNickname()) == true)
+    if(Channel.getInvitaionStatus() == true && Channel.ft_find_client("Invited", Client.getNickname()) == false)
     {
         std::string msg = ": 473 " + Client.getNickname() + " " + channel_name + " :Cannot join channel (+i)\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
@@ -98,7 +98,7 @@ void server::ft_try_to_join(std::string channel_name, std::string password, clie
     }
             
     // error : channel requries a password ..
-    if(Channel.getPassWordStatus() == true)
+    if(Channel.getPassWordStatus() == true && Channel.ft_find_client("Invited", Client.getNickname()) == false)
     {
         if(password.empty() == true|| Channel.getPassword() != password)
         {
