@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:18:57 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/25 20:14:33 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 21:30:04 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void server::ft_kick_users(channel & Channel, client & Client, std::vector<std::
     {
         if(Channel.ft_a_member_or_admin(Users[i]) == false)// not a member or admin
         {
-            std::string msg = ": 441 " + Channel.getName() + " " + ":they aren't on that channel\r\n";
+            std::string msg = ": 441 " + Channel.getName() + " :they aren't on that channel\r\n";
             ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
             continue;
         }
@@ -62,7 +62,7 @@ void server::ft_kick(std::vector<std::string> Cmds, client & Client, int Socket)
 
     if(Channel.ft_find_client("Admins", Client.getNickname()) == false)
     {
-        std::string msg = ": 482 " + Channel.getName() + " " + ":You're not a channel operator\r\n";
+        std::string msg = ": 482 " + Channel.getName() + " :You're not a channel operator\r\n";
         ft_send(Client.getSocket(), msg.c_str(), msg.size(), 0);
         return ;
     }

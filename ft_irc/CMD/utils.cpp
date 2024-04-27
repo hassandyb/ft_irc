@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:30:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/25 18:21:04 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 21:32:14 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,6 @@ void ft_split_with_spaces(std::vector<std::string> & Cmds, std::string Command)
 
 bool server::ft_send(int socket, const void * buff, size_t len, int flags)
 {
-
-    // for testing ...only
-    // (void)socket;
-    // (void)len;
-    // (void)flags;
-    // char *msg = (char *)buff;
-    // std::cout << msg << std::endl;
-    
 
     ssize_t r =  send(socket, buff, len, flags);
     if(r == -1)// send faliere
