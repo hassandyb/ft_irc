@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:40 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/24 20:25:59 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 14:52:25 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class client
 		bool Regestred;//after the pass word is correct clinet must enter nick and user to pass this satge 
 		
 		std::string Realname;
-
+		bool Quit;
 		
 		// remove later &&&&&&&&&&&&&&&&&&&&&&&&
 		//  int Fd; //-> client file descriptor
@@ -52,6 +52,7 @@ class client
 		void setPassStage(bool status);
 		void setRegestred(bool status);
 		void setRealname(std::string Realname);
+		void setQuit(bool Quit);
 		//Getters : ----------------
 		int getSocket();
 		std::string getNickname();
@@ -59,6 +60,7 @@ class client
 		bool getPassStage();
 		bool getRegestred();
 		std::string getRealname();
+		bool getQuit();
 
 		// remove later &&&&&&&&&&&&&&&&&&&&&&&&
 		int GetFd(){return Socket;} //-> getter for fd
@@ -66,6 +68,10 @@ class client
  		void setIpAdd(std::string ipadd){IPadd = ipadd;} //-> setter for ipadd
 		void setBuffer(std::string recived){buffer += recived;}
 		std::string getBuffer(){return buffer;}
-		void	clearBuffer(){buffer.clear();};
+		void	clearBuffer()
+		{
+			
+			buffer.clear();
+		};
 		
 };

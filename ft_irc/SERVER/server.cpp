@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:08:02 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/26 17:04:04 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 14:57:39 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,13 @@ void server::ReceiveNewData(int fd)
         // std::cout << YEL << "Client <" << fd << "> Data: " << WHI << buff;
         // std::string str(buff);
         ft_execute_command(buff, Client, fd);
+        if(Client.getQuit() == true)
+        {
+            ft_delete_client(Client);
+            close(fd);
+            // supose to delet from fds too..
+            return ;
+        }
         Client.clearBuffer();
         // std::cout << Client.getBuffer() << std::endl;
         //here you can add your code to process the received data: parse, check, authenticate, handle the command, etc...

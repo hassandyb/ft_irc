@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:21:07 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/23 13:41:55 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 14:56:01 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ void server::ft_quit(std::vector<std::string> Cmds, client & Client, int Socket)
             ft_send_msg_to_all(Channels[i].getAdmins(),msg);
             ft_send_msg_to_all(Channels[i].getMembers(), msg);
         }
-        ft_delete_client(Client);
-        close(Socket);
+        // you supose to delete this client form fds too ...
+        Client.setQuit(true);
+        
+        
     }
 }
 

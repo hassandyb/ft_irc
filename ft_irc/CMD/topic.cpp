@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:40:52 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/27 12:04:50 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 12:53:49 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void server::ft_topic(std::vector<std::string> Cmds, client & Client, int Socket
         ft_send(Socket, msg.c_str(), msg.size(), 0);
         return ;
     }
-    if(Channel.getAdminStatus() == true && Channel.ft_find_client("Admins", Client.getNickname()) == false)
+    if(Channel.getTopicStatus() == true && Channel.ft_find_client("Admins", Client.getNickname()) == false)
     {
         std::string msg = ": 482 " + Channel.getName() + " :You're not a channel operator\r\n";
         ft_send(Socket, msg.c_str(), msg.size(), 0);

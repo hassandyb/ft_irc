@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 22:17:38 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/27 11:28:45 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 15:27:59 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ class server
 					std::cout << Invited[i].getNickname() << " ";
 				}
 	
-				std::cout << "\n  Status : "<< "p" << Channels[i].getPassWordStatus() << "i" << Channels[i].getInvitaionStatus() << "t" << Channels[i].getTopicStatus() << "l" << Channels[i].getAdminStatus() << std::endl;
+				std::cout << "\n  Status : "<< "k" << Channels[i].getPassWordStatus() << "i" << Channels[i].getInvitaionStatus() << "t" << Channels[i].getTopicStatus() << "l" << Channels[i].getAdminStatus() << std::endl;
 				std::cout << " ---- " << std::endl;
 			}
 		}
