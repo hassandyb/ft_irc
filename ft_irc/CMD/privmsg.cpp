@@ -6,19 +6,23 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 12:54:36 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/25 20:20:57 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 20:40:28 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../HEADERS/server.hpp"
 
+// th member get this 
+//      :a!~a@localhost PRIVMSG b :hi b hoe rea you
 void server::ft_priv_msg_client(std::string Recipient_name, client & Client, std::string message)
 {
     client & Recipient = ft_get_client(Recipient_name);
-    std::string msg = ":" + Client.getNickname() + " PRIVMSG " + Recipient.getNickname() + ":" + message + "\r\n";
+    std::string msg = ":" + Client.getNickname() + "!" + Client.getRealname() + "@localhost PRIVMSG " + Recipient.getNickname() + ":" + message + "\r\n";
     ft_send(Recipient.getSocket(), msg.c_str(), msg.size(), 0);
 }
 
+// all members gets this exit the sender 
+// :a!~a@localhost PRIVMSG #group :hi guys ...
 void server::ft_priv_msg_channel(std::string Recipient_channel, client & Client, std::string message)
 {
     channel & Channel = ft_get_a_channel(Recipient_channel);
@@ -32,7 +36,7 @@ void server::ft_priv_msg_channel(std::string Recipient_channel, client & Client,
     }
     
     // sending to all members and admins ...
-    std::string msg = Client.getNickname() + " PRIVMSG " + Recipient_channel + ":" + message;
+    std::string msg = ":" + Client.getNickname() + "!" + Client.getUsername() + "@localhost PRIVMSG " + Recipient_channel + ":" + message;
     
     std::vector<client > Members = Channel.getMembers();
     std::vector<client > Admins = Channel.getAdmins();
