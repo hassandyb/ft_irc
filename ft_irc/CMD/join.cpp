@@ -6,7 +6,7 @@
 /*   By: hed-dyb <hed-dyb@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:36:59 by hed-dyb           #+#    #+#             */
-/*   Updated: 2024/04/27 16:49:45 by hed-dyb          ###   ########.fr       */
+/*   Updated: 2024/04/27 20:09:46 by hed-dyb          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,18 @@ bool server::ft_channel_exist(std::string channel_name)
 
 void server::ft_join_message(std::string & channel_name, client & Client, channel & new_channel)
 {
+    std::string msg1 = ":" + Client.getNickname() + "!" + Client.getUsername() + "@127.0.0.1 JOIN " + channel_name + "\r\n";
+    std::string msg2 = ": 353 " + Client.getNickname() + " @ " + channel_name + " :" + new_channel.ft_list_admins_and_members() + "\r\n";
+    std::string msg3 = ": 366 " + Client.getNickname() + " " + channel_name + " :End of /NAMES list" + "\r\n";
+    
+    // send to client 
+    ft_send(Client.getSocket(), msg1.c_str(), msg1.size(), 0);
+    ft_send(Client.getSocket(), msg2.c_str(), msg2.size(), 0);
+    ft_send(Client.getSocket(), msg3.c_str(), msg3.size(), 0);
+    
+    // desplay on the server ...
 
-//           :a!a@127.0.0.1 JOIN #group
-//           : 353 a @ #group :@a
-//           : 366 a #group :END of /NAMES list
-
-
-//          ":" + hostname + " 353 " + nick + " = " + channelname + " :" + clients + "\r\n"
-        std::string msg1 = ":" + Client.getNickname() + "!" + Client.getUsername() + "@localhost JOIN " + channel_name + "\r\n";
-        std::string msg2 = ": localhost 353 " + Client.getNickname() + " = " + channel_name + " :" + new_channel.ft_list_admins_and_members() + "\r\n";
-        std::string msg3 = ": localhost 366 " + Client.getNickname() + " " + channel_name + " :End of /NAMES list." + "\r\n";
-        
-        // send to client 
-        ft_send(Client.getSocket(), msg1.c_str(), msg1.size(), 0);
-        ft_send(Client.getSocket(), msg2.c_str(), msg2.size(), 0);
-        ft_send(Client.getSocket(), msg3.c_str(), msg3.size(), 0);
-        
-        // desplay on the server ...
-
-        std::cout << msg1 << msg2 << msg3;
+    std::cout << msg1 << msg2 << msg3;
        
 }
 
